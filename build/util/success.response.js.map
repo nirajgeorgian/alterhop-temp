@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../src/util/success.response.js"],"names":["success","data"],"mappings":";;;;;AAAA,IAAMA,UAAU,iBAACA,QAAD,EAAUC,IAAV,EAAmB;AAClC,QAAO;AACND,mBADM;AAENC;AAFM,EAAP;AAIA,CALD;;kBAOeD,O","file":"success.response.js","sourcesContent":["const success = (success, data) => {\n\treturn {\n\t\tsuccess,\n\t\tdata\n\t}\n}\n\nexport default success\n"]}
