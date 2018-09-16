@@ -40,10 +40,10 @@ var app = (0, _express2.default)();
 	mongodb connection URI
 	mongodb://root:alterhopN9@ds227332.mlab.com:27332/alterhop
 */
-_mongoose2.default.connect('mongodb://root:alterhopN9@ds227332.mlab.com:27332/alterhop', { useNewUrlParser: true }).then(function (res) {
-	return console.log('successfully connected to mongodb database');
+_mongoose2.default.connect('mongodb://rot:alterhopN9@ds227332.mlab.com:27332/alterhop', { useNewUrlParser: true }).then(function (res) {
+	return process.stdout.write('successfully connected to mongodb database \n');
 }, function (err) {
-	console.log("Error occured during database connection");
+	process.stderr.write('Error occured during database connection \n');
 	return process.exit(2);
 });
 
@@ -63,6 +63,6 @@ app.use('/auth', _auth2.default);
 app.use('/', _test2.default);
 
 app.listen(port, function (conn, err) {
-	console.log('Running on http://localhost:' + port);
+	process.stdout.write('Running on http://localhost:' + port + ' \n');
 });
 //# sourceMappingURL=index.js.map

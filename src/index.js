@@ -13,9 +13,9 @@ const app = express()
 mongoose.connect('mongodb://root:alterhopN9@ds227332.mlab.com:27332/alterhop',
 	{ useNewUrlParser: true })
 	.then(
-		res => console.log(`successfully connected to mongodb database`),
+		res => process.stdout.write(`successfully connected to mongodb database \n`),
 		err => {
-			console.log("Error occured during database connection")
+			process.stderr.write('Error occured during database connection \n')
 			return process.exit(2)
 		}
 	)
@@ -37,5 +37,5 @@ app.use('/auth', AuthRoute)
 app.use('/', TestRoute)
 
 app.listen(port, (conn, err) => {
-	console.log(`Running on http://localhost:${port}`)
+	process.stdout.write(`Running on http://localhost:${port} \n`)
 })

@@ -11,24 +11,24 @@ var _index = require('../index');
 /* Uncaught Error handling */
 process.on('uncaughtException', function (err) {
 	if (err.code === 'EADDRINUSE') {
-		console.log('Caught PORT conflict exception: ' + err + '\n');
-		console.log('Please choose another port or switch off the ' + _index.port);
+		process.stderr.write('Caught PORT conflict exception: ' + err + '\n');
+		process.stderr.write('Please choose another port or switch off the :' + _index.port + ' port\n');
 		process.exit(1);
 	} else {
-		console.log('Caught exception: ' + err.message + '\n');
+		process.stderr.write('Caught exception: ' + err.message + '\n');
 		process.exit();
 	}
 });
 process.on('exit', function (code) {
 	switch (code) {
 		case 1:
-			console.log('About to exit with code: ' + code + ' => Server Connection Error');
+			process.stderr.write('About to exit with code: ' + code + ' => Server Connection Error\n');
 			return process.exit(0);
 		case 2:
-			console.log('About to exit with code: ' + code + ' => Database Connection Error');
+			process.stderr.write('About to exit with code: ' + code + ' => Database Connection Error\n');
 			return process.exit(0);
 		default:
-			console.log('About to exit with code: ' + code + ' => Unhandled Error');
+			process.stderr.write('About to exit with code: ' + code + ' => Unhandled Error\n');
 			return process.exit(0);
 	}
 });
