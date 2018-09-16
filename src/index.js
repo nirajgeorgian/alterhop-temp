@@ -1,11 +1,28 @@
+import '@babel/polyfill'
+import http from 'http'
 import express from 'express'
-import bodyParser from 'body-parser'
-import morgan from 'morgan'
-
+import mongoose from 'mongoose'
+import { connectMiddleware } from './util/middleware.app'
+import './util/manageProcess.app' /* for managing process efficiently w.r.t exit code */
 const app = express()
-app.use(bodyParser.json())
-app.use(morgan('combined'))
-const port = process.env.PORT || 3000
+
+/*
+	mongodb connection URI
+	mongodb://root:alterhopN9@ds227332.mlab.com:27332/alterhop
+*/
+mongoose.connect('mongodb://root:alterhopN9@ds227332.mlab.com:27332/alterhop',
+	{ useNewUrlParser: true })
+	.then(
+		res => console.log(`successfully connected to mongodb database`),
+		err => {
+			console.log("Error occured during database connection")
+			return process.exit(2)
+		}
+	)
+
+/* Connect middleware here */
+connectMiddleware(app)
+export const port = process.env.PORT || 3000
 
 /*
 	Routes defined here
@@ -13,9 +30,12 @@ const port = process.env.PORT || 3000
 import AuthRoute from './routes/auth.route'
 import TestRoute from './routes/test.route'
 
+/*
+	Middleware for Routes connection defined here
+*/
 app.use('/auth', AuthRoute)
 app.use('/', TestRoute)
 
-app.listen(port, () => {
+app.listen(port, (conn, err) => {
 	console.log(`Running on http://localhost:${port}`)
 })
