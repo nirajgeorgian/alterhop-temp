@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.connection = undefined;
+exports.dbDisconnect = exports.dbConnect = undefined;
 
 var _express = require('express');
 
@@ -34,15 +34,19 @@ var app = (0, _express2.default)();
 	mongodb connection URI
 	mongodb://root:alterhopN9@ds227332.mlab.com:27332/alterhop
 */
-var connection = exports.connection = function connection() {
-	_mongoose2.default.connect('mongodb://root:alterhopN9@ds227332.mlab.com:27332/alterhop', { useNewUrlParser: true }).then(function (res) {
+var dbConnect = exports.dbConnect = function dbConnect() {
+	_mongoose2.default.connect(process.env.MONGO_URL + '/' + process.env.MONGO_DB, { useNewUrlParser: true }).then(function (res) {
 		return process.stdout.write('successfully connected to mongodb database \n');
 	}, function (err) {
 		process.stderr.write('Error occured during database connection \n');
 		return process.exit(2);
 	});
 };
-// process.nextTick(connection)
+process.nextTick(dbConnect);
+/* mongoose disconnect connection used for testing */
+var dbDisconnect = exports.dbDisconnect = function dbDisconnect(done) {
+	_mongoose2.default.disconnect(done);
+};
 
 /* Connect middleware here */
 (0, _middleware.connectMiddleware)(app);

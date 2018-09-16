@@ -9,7 +9,7 @@ const app = express()
 	mongodb://root:alterhopN9@ds227332.mlab.com:27332/alterhop
 */
 export const dbConnect = () => {
-	mongoose.connect('mongodb://root:alterhopN9@ds227332.mlab.com:27332/alterhop',
+	mongoose.connect(`${process.env.MONGO_URL}/${process.env.MONGO_DB}`,
 	{ useNewUrlParser: true })
 	.then(
 		res => process.stdout.write(`successfully connected to mongodb database \n`),

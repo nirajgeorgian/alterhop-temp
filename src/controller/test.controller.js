@@ -1,9 +1,9 @@
-import success from '../util/success.response'
+import response from '../util/response.response'
 
 export const get = (req, res) => {
-  res.send(success(true, "Welcome to the api"))
+  res.send(response(true, "Welcome to the api"))
 }
 
 export const post = (req, res) => {
-  res.send(success(true, req.body))
+  res.send(response(true, req.body))
 }

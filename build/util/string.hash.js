@@ -14,7 +14,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var hashPassword = exports.hashPassword = function hashPassword(password) {
   var length = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 64;
 
-  var key = _crypto2.default.pbkdf2Sync(password, 'dodoN9@#48^', 100000, length, 'sha512');
+  var key = _crypto2.default.pbkdf2Sync(password, process.env.HASH_SECRET, 100000, length, 'sha512');
   return key.toString('hex');
 };
 
