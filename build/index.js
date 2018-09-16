@@ -40,7 +40,7 @@ var app = (0, _express2.default)();
 	mongodb connection URI
 	mongodb://root:alterhopN9@ds227332.mlab.com:27332/alterhop
 */
-_mongoose2.default.connect('mongodb://rot:alterhopN9@ds227332.mlab.com:27332/alterhop', { useNewUrlParser: true }).then(function (res) {
+_mongoose2.default.connect('mongodb://root:alterhopN9@ds227332.mlab.com:27332/alterhop', { useNewUrlParser: true }).then(function (res) {
 	return process.stdout.write('successfully connected to mongodb database \n');
 }, function (err) {
 	process.stderr.write('Error occured during database connection \n');
