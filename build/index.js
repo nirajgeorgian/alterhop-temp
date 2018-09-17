@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.port = undefined;
 
-require('@babel/polyfill');
+require('@babel/polyfill/noConflict');
 
 var _app = require('./app');
 

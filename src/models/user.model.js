@@ -1,3 +1,4 @@
+const crypto = require('crypto')
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
@@ -14,14 +15,18 @@ const UserSchema = new Schema({
 	@return {hashed password}
 */
 UserSchema.methods.hashPassword = function(length = 64) {
-	const key = crypto.pbkdf2Sync(this.password, process.env.HASH_SECRET, 100000, length, 'sha512')
+	const salt = new Buffer(new String(process.env.HASH_SECRET), 'base64')
+	const hashPassword = new Buffer(new String(this.password), 'base64')
+	const key = crypto.pbkdf2Sync(hashPassword, salt, 100000, length, 'sha512')
 	this.password = key.toString('hex')
 	return true
 }
 
 UserSchema.methods.verifyPassword = function(password, length = 64) {
-	const key = crypto.pbkdf2Sync(password, process.env.HASH_SECRET, 100000, length, 'sha512')
-	if(this.password === key) {
+	const salt = new Buffer(new String(process.env.HASH_SECRET), 'base64')
+	const hashPassword = new Buffer(new String(password), 'base64')
+	const key = crypto.pbkdf2Sync(password, salt, 100000, length, 'sha512')
+	if(this.password === key.toString('hex')) {
 		return true
 	}
 	return false

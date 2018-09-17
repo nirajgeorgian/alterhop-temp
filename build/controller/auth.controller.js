@@ -28,15 +28,15 @@ var signup = exports.signup = function () {
 			while (1) {
 				switch (_context.prev = _context.next) {
 					case 0:
-						data = res.body;
-						user = new User(data);
+						data = req.body;
+						user = new _user2.default(data);
 
 						user.hashPassword();
 						_context.next = 5;
 						return user.save();
 
 					case 5:
-						return _context.abrupt('return', (0, _response2.default)(true, user));
+						return _context.abrupt('return', res.send((0, _response2.default)(true, user)));
 
 					case 6:
 					case 'end':

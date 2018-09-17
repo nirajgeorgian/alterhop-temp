@@ -13,14 +13,14 @@ var isRevokedCallback = function(req, payload, done) {
 }
 
 export const revoke = (req, res, next) => {
-  exjwt({
-    secret: process.env.JWT_SECRET,
+  return exjwt({
+    secret: 'dodoN9@#*%()',
     isRevoked: isRevokedCallback
   })
 }
 
 export const verify = exjwt({
-  secret: process.env.JWT_SECRET,
+  secret: 'dodoN9@#*%()',
   credentialsRequired: false,
   getToken: function fromHeaderOrQuerystring(req) {
     if(req.headers.authorization && req.headers.authorization.split(" ")[0] === "Bearer") {

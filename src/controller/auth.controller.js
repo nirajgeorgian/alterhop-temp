@@ -3,11 +3,11 @@ import UserModel from '../models/user.model'
 import response from '../util/response.response'
 
 export const signup = async (req, res) => {
-	const data = res.body
-	const user = new User(data)
+	const data = req.body
+	const user = new UserModel(data)
 	user.hashPassword()
 	await user.save()
-	return response(true, user)
+	return res.send(response(true, user))
 }
 
 export const login = async (req, res) => {

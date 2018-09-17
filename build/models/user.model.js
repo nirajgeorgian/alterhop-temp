@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
+var crypto = require('crypto');
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
@@ -18,19 +19,23 @@ var UserSchema = new Schema({
 	@params {password}
 	@return {hashed password}
 */
-UserSchema.statics.hashPassword = function () {
+UserSchema.methods.hashPassword = function () {
 	var length = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 64;
 
-	var key = crypto.pbkdf2Sync(this.password, process.env.HASH_SECRET, 100000, length, 'sha512');
+	var salt = new Buffer(new String(process.env.HASH_SECRET), 'base64');
+	var hashPassword = new Buffer(new String(this.password), 'base64');
+	var key = crypto.pbkdf2Sync(hashPassword, salt, 100000, length, 'sha512');
 	this.password = key.toString('hex');
 	return true;
 };
 
-UserSchema.statics.verifyPassword = function (password) {
+UserSchema.methods.verifyPassword = function (password) {
 	var length = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 64;
 
-	var key = crypto.pbkdf2Sync(password, process.env.HASH_SECRET, 100000, length, 'sha512');
-	if (this.password === key) {
+	var salt = new Buffer(new String(process.env.HASH_SECRET), 'base64');
+	var hashPassword = new Buffer(new String(password), 'base64');
+	var key = crypto.pbkdf2Sync(password, salt, 100000, length, 'sha512');
+	if (this.password === key.toString('hex')) {
 		return true;
 	}
 	return false;

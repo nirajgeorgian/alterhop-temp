@@ -1,11 +1,11 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.verify = exports.revoke = undefined;
 
-var _expressJwt = require("express-jwt");
+var _expressJwt = require('express-jwt');
 
 var _expressJwt2 = _interopRequireDefault(_expressJwt);
 
@@ -24,24 +24,22 @@ var isRevokedCallback = function isRevokedCallback(req, payload, done) {
 };
 
 var revoke = exports.revoke = function revoke(req, res, next) {
-  (0, _expressJwt2.default)({
-    secret: process.env.JWT_SECRET,
+  return (0, _expressJwt2.default)({
+    secret: 'dodoN9@#*%()',
     isRevoked: isRevokedCallback
   });
 };
 
-var verify = exports.verify = function verify(req, res, next) {
-  (0, _expressJwt2.default)({
-    secret: process.env.JWT_SECRET,
-    credentialsRequired: false,
-    getToken: function fromHeaderOrQuerystring(req) {
-      if (req.headers.authorization && req.headers.authorization.split(" ")[0] === "Bearer") {
-        return req.headers.authorization.split(" ")[1];
-      } else if (req.query && req.query.token) {
-        return req.query.token;
-      }
-      return null;
+var verify = exports.verify = (0, _expressJwt2.default)({
+  secret: 'dodoN9@#*%()',
+  credentialsRequired: false,
+  getToken: function fromHeaderOrQuerystring(req) {
+    if (req.headers.authorization && req.headers.authorization.split(" ")[0] === "Bearer") {
+      return req.headers.authorization.split(" ")[1];
+    } else if (req.query && req.query.token) {
+      return req.query.token;
     }
-  });
-};
+    return null;
+  }
+});
 //# sourceMappingURL=authverify.middleware.js.map

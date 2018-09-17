@@ -1,4 +1,4 @@
-import '@babel/polyfill'
+import '@babel/polyfill/noConflict'
 require('dotenv').config()
 import app from './app'
 
