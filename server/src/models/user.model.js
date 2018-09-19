@@ -25,7 +25,7 @@ UserSchema.methods.hashPassword = function(length = 64) {
 UserSchema.methods.verifyPassword = function(password, length = 64) {
 	const salt = new Buffer(new String(process.env.HASH_SECRET), 'base64')
 	const hashPassword = new Buffer(new String(password), 'base64')
-	const key = crypto.pbkdf2Sync(password, salt, 100000, length, 'sha512')
+	const key = crypto.pbkdf2Sync(hashPassword, salt, 100000, length, 'sha512')
 	if(this.password === key.toString('hex')) {
 		return true
 	}

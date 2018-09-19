@@ -34,7 +34,7 @@ UserSchema.methods.verifyPassword = function (password) {
 
 	var salt = new Buffer(new String(process.env.HASH_SECRET), 'base64');
 	var hashPassword = new Buffer(new String(password), 'base64');
-	var key = crypto.pbkdf2Sync(password, salt, 100000, length, 'sha512');
+	var key = crypto.pbkdf2Sync(hashPassword, salt, 100000, length, 'sha512');
 	if (this.password === key.toString('hex')) {
 		return true;
 	}

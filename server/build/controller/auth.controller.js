@@ -59,26 +59,32 @@ var login = exports.login = function () {
 				switch (_context2.prev = _context2.next) {
 					case 0:
 						data = req.body;
-						user = _user2.default.findOne({ username: data.username });
+						_context2.next = 3;
+						return _user2.default.findOne({ username: data.username });
+
+					case 3:
+						user = _context2.sent;
 
 						if (user) {
-							_context2.next = 4;
+							_context2.next = 6;
 							break;
 						}
 
-						return _context2.abrupt('return', (0, _response2.default)(false, 'No User exist\'s for ' + user.username));
+						return _context2.abrupt('return', res.send((0, _response2.default)(false, 'No User exist\'s for ' + user.username)));
 
-					case 4:
+					case 6:
 						verified = user.verifyPassword(data.password);
 
+						console.log(verified);
+
 						if (verified) {
-							_context2.next = 7;
+							_context2.next = 10;
 							break;
 						}
 
-						return _context2.abrupt('return', (0, _response2.default)(false, 'Sorry the password did not matched:=> ' + data.password));
+						return _context2.abrupt('return', res.send((0, _response2.default)(false, 'Sorry the password did not matched:=> ' + data.password)));
 
-					case 7:
+					case 10:
 						token = _jsonwebtoken2.default.sign({
 							id: user.id,
 							email: user.email,
@@ -86,7 +92,7 @@ var login = exports.login = function () {
 						}, process.env.JWT_SECRET, { expiresIn: '1h' });
 						return _context2.abrupt('return', res.send((0, _response2.default)(true, token)));
 
-					case 9:
+					case 12:
 					case 'end':
 						return _context2.stop();
 				}

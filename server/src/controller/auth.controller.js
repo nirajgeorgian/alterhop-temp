@@ -12,13 +12,14 @@ export const signup = async (req, res) => {
 
 export const login = async (req, res) => {
 	const data = req.body
-	const user = UserModel.findOne({ username: data.username })
+	const user = await UserModel.findOne({ username: data.username })
 	if(!user) {
-		return response(false, `No User exist's for ${user.username}`)
+		return res.send(response(false, `No User exist's for ${user.username}`))
 	}
 	const verified = user.verifyPassword(data.password)
+	console.log(verified);
 	if(!verified) {
-		return response(false, `Sorry the password did not matched:=> ${data.password}`)
+		return res.send(response(false, `Sorry the password did not matched:=> ${data.password}`))
 	}
 	const token = jwt.sign({
 		id: user.id,
