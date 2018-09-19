@@ -31,7 +31,6 @@ class App extends Component {
                 <div className="App-intro">
                     <AsyncComponent />
                     <p>
-												dodo lives here
                         Redux: { this.props.message }
                     </p>
                 </div>
