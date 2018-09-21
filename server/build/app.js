@@ -3,7 +3,6 @@
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.dbDisconnect = exports.dbConnect = undefined;
 
 var _express = require('express');
 
@@ -17,6 +16,8 @@ var _middleware = require('./util/middleware.app');
 
 require('./util/manageProcess.app');
 
+var _dbconn = require('./dbconn');
+
 var _auth = require('./routes/auth.route');
 
 var _auth2 = _interopRequireDefault(_auth);
@@ -27,26 +28,14 @@ var _test2 = _interopRequireDefault(_test);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/* for managing process efficiently w.r.t exit code */
-var app = (0, _express2.default)();
+var app = (0, _express2.default)(); /* for managing process efficiently w.r.t exit code */
+
+var router = _express2.default.Router();
 
 /*
-	mongodb connection URI
-	mongodb://root:alterhopN9@ds227332.mlab.com:27332/alterhop
-*/
-var dbConnect = exports.dbConnect = function dbConnect() {
-	_mongoose2.default.connect(process.env.MONGO_URL + '/' + process.env.MONGO_DB, { useNewUrlParser: true }).then(function (res) {
-		return process.stdout.write('successfully connected to mongodb database \n');
-	}, function (err) {
-		process.stderr.write('Error occured during database connection \n');
-		return process.exit(2);
-	});
-};
-process.nextTick(dbConnect);
-/* mongoose disconnect connection used for testing */
-var dbDisconnect = exports.dbDisconnect = function dbDisconnect(done) {
-	_mongoose2.default.disconnect(done);
-};
+resolve db connection first to create a secure conection
+ */
+(0, _dbconn.resolveAll)();
 
 /* Connect middleware here */
 (0, _middleware.connectMiddleware)(app);
@@ -59,8 +48,9 @@ var dbDisconnect = exports.dbDisconnect = function dbDisconnect(done) {
 /*
 	Middleware for Routes connection defined here
 */
-app.use('/auth', _auth2.default);
-app.use('/', _test2.default);
+router.use('/auth', _auth2.default);
+router.use('/', _test2.default);
 
+app.use('/api', router);
 exports.default = app;
 //# sourceMappingURL=app.js.map

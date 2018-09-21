@@ -1,5 +1,5 @@
-import '@babel/polyfill/noConflict'
 require('dotenv').config()
+import '@babel/polyfill/noConflict'
 import http from 'http'
 import app from './app'
 
