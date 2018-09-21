@@ -1,49 +1,44 @@
-import React, { Component } from 'react';
-import Loadable from 'react-loadable';
-import { connect } from 'react-redux';
-
-import { setMessage } from './store/appReducer';
-
-// import logo from './logo.svg';
-import './App.css';
-
-
-const AsyncComponent = Loadable({
-    loader: () => import(/* webpackChunkName: "myNamedChunk" */ './SomeComponent'),
-    loading: () => <div>loading...</div>,
-    modules: ['myNamedChunk'],
-});
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { checkUserStatus } from './actionCreator/user.action.creator'
 
 class App extends Component {
-    componentDidMount() {
-        if(!this.props.message) {
-            this.props.updateMessage("Hi, I'm from client!");
-        }
-    }
+  state = {
+    username: '',
+    password: ''
+  }
 
-    render() {
-        return (
-            <div className="App">
-                <header className="App-header">
-                    <img src="./logo.svg" className="App-logo" alt="logo"/>
-                    <h1 className="App-title">Welcome to React</h1>
-                </header>
-                <div className="App-intro">
-                    <AsyncComponent />
-                    <p>
-                        Redux: { this.props.message }
-                    </p>
-                </div>
-            </div>
-        );
-    }
+  onInputChange = event => {
+    this.setState({
+      [event.target.id]: event.target.value
+    })
+  }
+
+  onFormSubmit = event => {
+    event.preventDefault()
+    this.props.checkUserStatus(this.state)
+  }
+
+  render() {
+    return (
+      <form onSubmit={this.onFormSubmit}>
+        <input type="text" id="username" onChange={this.onInputChange}/>
+        <input type="password" id="password" onChange={this.onInputChange}/>
+        <input type="submit" value="Submit"/>
+      </form>
+    )
+  }
 }
 
-export default connect(
-    ({ app }) => ({
-        message: app.message,
-    }),
-    dispatch => ({
-        updateMessage: (messageText) => dispatch(setMessage(messageText)),
-    })
-)(App);
+const mapStateToProps = state => {
+  return {
+    ...state
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({checkUserStatus}, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)

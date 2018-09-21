@@ -3,6 +3,7 @@ import mongoose from 'mongoose'
 import { connectMiddleware } from './util/middleware.app'
 import './util/manageProcess.app' /* for managing process efficiently w.r.t exit code */
 const app = express()
+const router = express.Router()
 
 /*
 	mongodb connection URI
@@ -37,7 +38,8 @@ import TestRoute from './routes/test.route'
 /*
 	Middleware for Routes connection defined here
 */
-app.use('/auth', AuthRoute)
-app.use('/', TestRoute)
+router.use('/auth', AuthRoute)
+router.use('/', TestRoute)
 
+app.use('/api', router)
 export default app
