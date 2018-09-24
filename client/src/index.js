@@ -2,14 +2,21 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Loadable from 'react-loadable'
 import { Provider as ReduxProvider } from 'react-redux'
-import App from './App'
+import { PersistGate } from 'redux-persist/integration/react'
+import { BrowserRouter as Router } from 'react-router-dom'
+import { persistor } from './store/app.store'
 import getStore from './store/app.store'
+import AppRouter from './router/app.routes'
 // import registerServiceWorker from './registerServiceWorker';
 
 
 const AppBundle = (
   <ReduxProvider store={getStore()}>
-    <App />
+    <PersistGate loading={null} persistor={persistor}>
+      <Router>
+        <AppRouter />
+      </Router>
+    </PersistGate>
   </ReduxProvider>
 );
 

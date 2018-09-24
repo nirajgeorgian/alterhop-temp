@@ -7,8 +7,9 @@ import {
   USER_AUTH_SUCCESS,
   USER_AUTH_FAILURE
 } from '../actionType/user.action.type'
+import { checkUserStatusSuccess } from '../actionCreator/user.action.creator'
 
-export const loginUserEpic = action$ => action$.pipe(
+export const loginUserEpic = (action$, state$) => action$.pipe(
   ofType(USER_AUTH_START),
   switchMap(action => {
     // const { username, password } = action.payload
@@ -16,7 +17,9 @@ export const loginUserEpic = action$ => action$.pipe(
     return ajax.post('/api/auth/login', action.payload, headers).pipe(
       map(loginResponse => {
         // call the success reducer
-        console.log(loginResponse)
+        if(loginResponse.status === 200 && loginResponse.response.success) {
+          return checkUserStatusSuccess(loginResponse.response)
+        }
       })
     )
   })

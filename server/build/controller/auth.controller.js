@@ -36,7 +36,7 @@ var signup = exports.signup = function () {
 						return user.save();
 
 					case 5:
-						return _context.abrupt('return', res.send((0, _response2.default)(true, user)));
+						return _context.abrupt('return', res.status(201).send((0, _response2.default)(true, user)));
 
 					case 6:
 					case 'end':
@@ -66,33 +66,37 @@ var login = exports.login = function () {
 						user = _context2.sent;
 
 						if (user) {
-							_context2.next = 6;
+							_context2.next = 8;
 							break;
 						}
 
-						return _context2.abrupt('return', res.send((0, _response2.default)(false, 'No User exist\'s for ' + user.username)));
+						_context2.next = 7;
+						return res.send((0, _response2.default)(false, 'No User exist\'s for ' + data.username));
 
-					case 6:
+					case 7:
+						return _context2.abrupt('return', _context2.sent);
+
+					case 8:
 						verified = user.verifyPassword(data.password);
 
 						console.log(verified);
 
 						if (verified) {
-							_context2.next = 10;
+							_context2.next = 12;
 							break;
 						}
 
 						return _context2.abrupt('return', res.send((0, _response2.default)(false, 'Sorry the password did not matched:=> ' + data.password)));
 
-					case 10:
+					case 12:
 						token = _jsonwebtoken2.default.sign({
 							id: user.id,
 							email: user.email,
 							username: user.username
 						}, process.env.JWT_SECRET, { expiresIn: '1h' });
-						return _context2.abrupt('return', res.send((0, _response2.default)(true, token)));
+						return _context2.abrupt('return', res.status(200).send((0, _response2.default)(true, token)));
 
-					case 12:
+					case 14:
 					case 'end':
 						return _context2.stop();
 				}
