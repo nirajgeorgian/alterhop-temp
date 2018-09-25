@@ -8,7 +8,7 @@ const PORT = 3000;
 // initialize the application and create the routes
 const app = express();
 
-app.use(indexController);
+app.use(indexController)
 
 // start the app
 Loadable.preloadAll().then(() => {

@@ -18,7 +18,6 @@ class App extends Component {
   onFormSubmit = async event => {
     event.preventDefault()
     const dodo = await this.props.checkUserStatus(this.state)
-    console.log(dodo)
   }
 
   render() {

@@ -50,7 +50,12 @@ export const configureStore = (initialState = {}) => {
 }
 
 const getStore = () => {
-  const store = configureStore( window.__REDUX_STATE__ || {} )
+  let store
+  if(global.window !== undefined) {
+    store = configureStore( window.__REDUX_STATE__ || {} )
+  } else {
+    store = configureStore({})
+  }
   epicMiddleware.run(rootEpics)
   return store
 }

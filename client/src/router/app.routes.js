@@ -5,7 +5,6 @@ import Loadable from 'react-loadable'
   import component's here for rendering
  */
 import App from '../App'
-import Account from '../components/account/index'
 
 /*
   import container's to render static page
@@ -17,7 +16,7 @@ import PageLoader from '../containers/loader/pageloader.containers'
   Make the component dynamic so it's get dynamically imported
  */
 const AccountComponent = Loadable({
-  loader: () => <Account />,
+  loader: () => import('../components/account/index'),
   loading: () => <PageLoader />
 })
 

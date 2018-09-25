@@ -31,9 +31,9 @@ export const userReducer = (state = initialState, action) => {
     case USER_AUTH_FAILURE:
       return {
         ...state,
-        user: action.payload.user,
+        user: action.user,
         loading: false,
-        error: action.payload.error
+        error: action.error
       }
     default:
       return state
