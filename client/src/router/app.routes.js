@@ -20,12 +20,24 @@ const AccountComponent = Loadable({
   loading: () => <PageLoader />
 })
 
+const SignupComponent = Loadable({
+  loader: () => import('../components/account/signup/signup.component'),
+  loading: () => <PageLoader />
+})
+
+const LoginComponent = Loadable({
+  loader: () => import('../components/account/login/login.component'),
+  loading: () => <PageLoader />
+})
+
 class AppRouter extends Component {
   render() {
     return (
       <Switch>
         <Route exact path='/' component={App} />
         <Route exact path='/account' component={AccountComponent} />
+        <Route exact path='/account/login' component={LoginComponent} />
+        <Route exact path='/account/signup' component={SignupComponent} />
         <Route component={PageNotFound} />
       </Switch>
     )

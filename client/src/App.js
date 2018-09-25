@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
-import { checkUserStatus } from './actionCreator/user.action.creator'
+import { userAuthStartAction } from './actionCreator/user.action.creator'
 
 class App extends Component {
   state = {
@@ -17,7 +18,7 @@ class App extends Component {
 
   onFormSubmit = async event => {
     event.preventDefault()
-    const dodo = await this.props.checkUserStatus(this.state)
+    const dodo = await this.props.userAuthStartAction(this.state)
   }
 
   render() {
@@ -26,6 +27,7 @@ class App extends Component {
         <input type="text" id="username" onChange={this.onInputChange}/>
         <input type="password" id="password" onChange={this.onInputChange}/>
         <input type="submit" value="Submit"/>
+        <Link to="/account">accounts</Link>
       </form>
     )
   }
@@ -38,7 +40,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({checkUserStatus}, dispatch)
+  return bindActionCreators({userAuthStartAction}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

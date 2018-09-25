@@ -4,11 +4,17 @@ import Loadable from 'react-loadable'
 import { Provider as ReduxProvider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import { BrowserRouter as Router } from 'react-router-dom'
+import { FocusStyleManager } from "@blueprintjs/core"
 import { persistor } from './store/app.store'
 import getStore from './store/app.store'
 import AppRouter from './router/app.routes'
+import './index.css'
 // import registerServiceWorker from './registerServiceWorker';
 
+/*
+Application specific configuration
+ */
+FocusStyleManager.onlyShowFocusOnTabs()
 
 const AppBundle = (
   <ReduxProvider store={getStore()}>
