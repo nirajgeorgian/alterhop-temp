@@ -1,42 +1,56 @@
-// import { Observable } from 'rxjs'
-import { mergeMap, map } from 'rxjs/operators'
-import { ajax } from 'rxjs/ajax'
-import { ofType } from 'redux-observable'
+import {filter, map, switchMap} from 'rxjs/operators'
+import {concat, of} from 'rxjs'
+import {ajax} from 'rxjs/ajax'
+import {ofType} from 'redux-observable'
+import {USER_AUTH_START, USER_SIGNUP_START} from '../actionType/user.action.type'
 import {
-  USER_AUTH_START,
-  USER_SIGNUP_START
-} from '../actionType/user.action.type'
-import {
-  userAuthSuccessAction, userAuthFailureAction,
-  userSignupSuccessAction, userSignupFailureAction
+  userAuthFailureAction,
+  userAuthSuccessAction,
+  userSignupFailureAction,
+  userSignupSuccessAction
 } from '../actionCreator/user.action.creator'
+import {loadingFalse, loadingTrue} from "../actionCreator/loading.action.creator";
 
-export const loginUserEpic = (action$, state$) => action$.pipe(
-  ofType(USER_AUTH_START),
-  mergeMap(action => {
-    // const { username, password } = action.payload
-    const headers = { 'Content-Type': 'application/json' }
-    // check that user is logged in or not
-    return ajax.post('/api/auth/login', action.payload, headers).pipe(
-      map(loginResponse => {
-        // call the success reducer
-        if(loginResponse.status === 200 && loginResponse.response.success) {
-          return userAuthSuccessAction(loginResponse.response)
-        } else {
-          const res = {
-            error: loginResponse.response.data,
-            user: action.payload.username
+export const loginUserEpic = (action$, state$) => {
+  return action$.pipe(
+    ofType(USER_AUTH_START),
+    filter(action => action.payload.username !== '' && action.payload.password !== ''),
+    switchMap(({payload}) => {
+      const headers = {'Content-Type': 'application/json'}
+      const loadingOn = of(loadingTrue(true))
+      const request = ajax.post('/api/auth/login', payload, headers).pipe(
+        map(loginResponse => {
+          // call the success reducer
+          if (loginResponse.status === 200 && loginResponse.response.success) {
+            const res = {
+              loggedIn: true,
+              token: loginResponse.response.data
+            }
+            return userAuthSuccessAction(res)
+          } else {
+            const res = {
+              error: loginResponse.response.data,
+              user: payload.username
+            }
+            return userAuthFailureAction(res)
           }
-          return userAuthFailureAction(res)
-        }
-      })
-    )
-  })
-)
+        })
+      )
+      const loadingOff = of(loadingFalse(false))
+
+      // merge both the result's
+      return concat(
+        loadingOn,
+        request,
+        loadingOff
+      )
+    })
+  );
+}
 
 export const signupUserEpic = (action$, state$) => action$.pipe(
   ofType(USER_SIGNUP_START),
-  mergeMap(action => {
+  switchMap(action => {
     const headers = { 'Content-Type': 'application/json' }
     return ajax.post('/api/auth/signup', action.payload, headers).pipe(
       map(signupResponse => {

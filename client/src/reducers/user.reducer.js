@@ -1,39 +1,25 @@
-import {
-  USER_AUTH_START,
-  USER_AUTH_SUCCESS,
-  USER_AUTH_FAILURE
-} from '../actionType/user.action.type'
+import {USER_AUTH_FAILURE, USER_AUTH_START, USER_AUTH_SUCCESS} from '../actionType/user.action.type'
 
 const initialState = {
-  user: {
-    username: null,
-    loggedIn: false,
-  },
-  loading: false,
-  error: null
+  token: null,
+  loggedIn: false
 }
 
 export const userReducer = (state = initialState, action) => {
   switch(action.type) {
     case USER_AUTH_START:
       return {
-        ...state,
-        loading: true,
-        error: null
+        ...state
       }
     case USER_AUTH_SUCCESS:
       return {
         ...state,
-        user: action.payload,
-        loading: false,
-        error: null
+        ...action.payload
       }
     case USER_AUTH_FAILURE:
       return {
         ...state,
-        user: action.user,
-        loading: false,
-        error: action.error
+        ...action.payload
       }
     default:
       return state
