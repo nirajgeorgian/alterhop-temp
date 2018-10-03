@@ -37,7 +37,6 @@ export const loginUserEpic = (action$, state$) => {
         })
       )
       const loadingOff = of(loadingFalse(false))
-
       // merge both the result's
       return concat(
         loadingOn,

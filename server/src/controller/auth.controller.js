@@ -17,7 +17,6 @@ export const login = async (req, res) => {
 		return await res.send(response(false, `No User exist's for ${data.username}`))
 	}
 	const verified = user.verifyPassword(data.password)
-	console.log(verified);
 	if(!verified) {
 		return res.send(response(false, `Sorry the password did not matched:=> ${data.password}`))
 	}

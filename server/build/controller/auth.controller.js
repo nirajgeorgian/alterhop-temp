@@ -79,16 +79,14 @@ var login = exports.login = function () {
 					case 8:
 						verified = user.verifyPassword(data.password);
 
-						console.log(verified);
-
 						if (verified) {
-							_context2.next = 12;
+							_context2.next = 11;
 							break;
 						}
 
 						return _context2.abrupt('return', res.send((0, _response2.default)(false, 'Sorry the password did not matched:=> ' + data.password)));
 
-					case 12:
+					case 11:
 						token = _jsonwebtoken2.default.sign({
 							id: user.id,
 							email: user.email,
@@ -96,7 +94,7 @@ var login = exports.login = function () {
 						}, process.env.JWT_SECRET, { expiresIn: '1h' });
 						return _context2.abrupt('return', res.status(200).send((0, _response2.default)(true, token)));
 
-					case 14:
+					case 13:
 					case 'end':
 						return _context2.stop();
 				}

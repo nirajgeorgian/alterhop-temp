@@ -7,7 +7,7 @@ import mongoose from 'mongoose'
 */
 const mongoUrl = `${process.env.MONGO_URL}/${process.env.MONGO_DB}`
 mongoose.set('bufferCommands', false)
-const mongooseConnect = mongoose.connect('mongodb://localhost:27017/slterhop', { autoReconnect: true, useNewUrlParser: true, connectTimeoutMS: 1000 })
+const mongooseConnect = mongoose.connect(mongoUrl, { autoReconnect: true, useNewUrlParser: true, connectTimeoutMS: 1000 })
 const mongodb = mongoose.connection
 const mongoConnect = new Promise((resolve, reject) => {
 	mongodb.once('open', () => {
