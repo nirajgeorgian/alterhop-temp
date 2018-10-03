@@ -24,6 +24,10 @@ services:
     labels:
       com.oojobapi.description: "alterhop web app client"
     build: ./client
+    expose:
+      - ${UI_SERVER_PORT}
+    ports:
+      - ${UI_SERVER_PORT}:${UI_SERVER_PORT}
 
 networks:
   oooonetwork:
