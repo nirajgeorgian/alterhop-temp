@@ -2,7 +2,9 @@ pipeline {
 	agent any
 	stages {
 		stage('Clean') {
-			sh 'docker container rm $(docker ps -q -f status=exited)'
+			steps {
+				sh 'docker container rm $(docker ps -q -f status=exited)'
+			}
 		}
 		stage("Build") {
 			steps {
