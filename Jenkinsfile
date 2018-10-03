@@ -3,17 +3,17 @@ pipeline {
 	stages {
 		stage('Clone') {
 			steps {
-				sh "Clone the deployed Code."
+				sh "echo Clone the deployed Code."
 			}
 		}
 		stage("Build") {
 			steps {
-				sh "Build the project to ship for production."
+				sh "echo Build the project to ship for production."
 			}
 		}
 		stage('Deploy') {
 			steps {
-				sh "Deploy the build code."
+				sh "echo Deploy the build code."
 			}
 		}
 	}
