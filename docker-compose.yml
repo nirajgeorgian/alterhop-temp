@@ -19,11 +19,11 @@ services:
     - ${MONGO_SERVER_PORT}:${MONGO_SERVER_PORT}
     networks:
       - oooonetwork
-  frontend:
-    container_name: alterhop-frontend
-    labels:
-      com.oojobapi.description: "alterhop web app client"
-    build: ./client
+  # frontend:
+  #   container_name: alterhop-frontend
+  #   labels:
+  #     com.oojobapi.description: "alterhop web app client"
+  #   build: ./client
 
 networks:
   oooonetwork:
