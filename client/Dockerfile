@@ -8,6 +8,9 @@ WORKDIR /usr/local/app/client
 # where available (npm@5+)
 COPY ./package*.json ./
 
+ENV NODE_PATH=/usr/local/app/client/node_modules
+ENV PATH=$PATH:/usr/local/app/client/node_modules/.bin
+
 # If you are building your code for production
 # RUN npm install --only=production
 RUN npm install
