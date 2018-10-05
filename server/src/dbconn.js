@@ -26,11 +26,31 @@ const dbDisconnect = done => {
 	mongoose.disconnect(done)
 }
 
+/*
+	@redis connection
+	create a redis client and connection is established
+*/
+const redisClient = redis.createClient(`${process.env.REDIS_SERVER_PORT}`, `${process.env.REDIS_HOST}`)
+const redisConnect = new Promise((resolve, reject) => {
+	redisClient.on('error', err => {
+		// redis error
+		process.stderr.write(`Error occured ${err.message()}`)
+		reject(err.message())
+		process.exit()
+	})
+	redisClient.on('connect', () => {
+		process.stdout.write(`🚀 Connected to redis redis:6379`)
+		resolve(redisClient)
+	})
+})
+
 const resolveAll = async () => {
 	await mongoConnect
+	await redisConnect
 }
 
 export {
 	resolveAll,
+	redisConnect,
 	dbDisconnect
 }

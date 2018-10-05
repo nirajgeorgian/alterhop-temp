@@ -24,7 +24,8 @@
     "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.2.14",
     "morgan": "^1.9.1",
-    "raven": "^2.6.4"
+    "raven": "^2.6.4",
+    "redis": "^2.8.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
