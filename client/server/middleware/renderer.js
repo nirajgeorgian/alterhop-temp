@@ -1,6 +1,9 @@
+import path from 'path'
+import fs from 'fs'
 import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import Loadable from 'react-loadable'
+import { StaticRouter } from 'react-router-dom'
 import { Provider as ReduxProvider } from 'react-redux'
 
 // import our main App component
@@ -14,11 +17,8 @@ const extractAssets = (assets, chunks) => Object.keys(assets)
     .map(k => assets[k])
 
 
-const path = require("path")
-const fs = require("fs")
-
-
 export default (store) => (req, res, next) => {
+    const context = {}
     // get the html file created with the create-react-app build
     const filePath = path.resolve(__dirname, '..', '..', 'build', 'index.html')
 
@@ -34,7 +34,9 @@ export default (store) => (req, res, next) => {
         const html = ReactDOMServer.renderToString(
             <Loadable.Capture report={m => modules.push(m)}>
                 <ReduxProvider store={store}>
+                  <StaticRouter location={req.url} context={context}>
                     <App/>
+                  </StaticRouter>
                 </ReduxProvider>
             </Loadable.Capture>
         )
@@ -45,6 +47,14 @@ export default (store) => (req, res, next) => {
         // map required assets to script tags
         const extraChunks = extractAssets(manifest, modules)
             .map(c => `<script type="text/javascript" src="/${c}"></script>`)
+
+				if (context.status === 404) {
+		      res.status(404)
+		    }
+
+				if (context.url) {
+				  return res.redirect(301, context.url)
+				}
 
         // now inject the rendered app into our html and send it to the client
         return res.send(

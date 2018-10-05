@@ -18,7 +18,7 @@ export const loginUserEpic = (action$, state$) => {
     switchMap(({payload}) => {
       const headers = {'Content-Type': 'application/json'}
       const loadingOn = of(loadingTrue(true))
-      const request = ajax.post('/api/auth/login', payload, headers).pipe(
+      const request = ajax.post('http://localhost:3000/api/auth/login', payload, headers).pipe(
         map(loginResponse => {
           // call the success reducer
           if (loginResponse.status === 200 && loginResponse.response.success) {
@@ -51,7 +51,7 @@ export const signupUserEpic = (action$, state$) => action$.pipe(
   ofType(USER_SIGNUP_START),
   switchMap(action => {
     const headers = { 'Content-Type': 'application/json' }
-    return ajax.post('/api/auth/signup', action.payload, headers).pipe(
+    return ajax.post(process.env.API_URL + '/api/auth/signup', action.payload, headers).pipe(
       map(signupResponse => {
         if(signupResponse.status === 200 && signupResponse.response.success) {
           return userSignupSuccessAction(signupResponse.response)

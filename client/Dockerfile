@@ -14,8 +14,17 @@ ENV PATH=$PATH:/usr/local/app/client/node_modules/.bin
 # If you are building your code for production
 # RUN npm install --only=production
 RUN npm install
+RUN rm -rf build
+COPY . .
+RUN npm run build
 
 # Bundle app source
-COPY . .
 
-CMD [ "npm", "start" ]
+FROM nginx:1.15.2-alpine
+COPY ./build /var/www
+COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
+EXPOSE 5000
+
+CMD ["nginx", "-g", "daemon off;"]
+
+# CMD [ "npm", "start" ]

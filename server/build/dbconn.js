@@ -22,7 +22,7 @@ require('dotenv').config();
 */
 var mongoUrl = process.env.MONGO_URL + '/' + process.env.MONGO_DB;
 _mongoose2.default.set('bufferCommands', false);
-var mongooseConnect = _mongoose2.default.connect('mongodb://localhost:27017/slterhop', { autoReconnect: true, useNewUrlParser: true, connectTimeoutMS: 1000 });
+var mongooseConnect = _mongoose2.default.connect(mongoUrl, { autoReconnect: true, useNewUrlParser: true, connectTimeoutMS: 1000 });
 var mongodb = _mongoose2.default.connection;
 var mongoConnect = new Promise(function (resolve, reject) {
 	mongodb.once('open', function () {

@@ -1,14 +1,22 @@
-import express from 'express';
-import Loadable from 'react-loadable';
+import express from 'express'
+import path from 'path'
+import Loadable from 'react-loadable'
+import serverRenderer from './middleware/renderer'
+import getStore from '../src/store/app.store'
 
-import indexController from './controllers/index';
-
-const PORT = 3000;
+const PORT = 5000
 
 // initialize the application and create the routes
-const app = express();
+const app = express()
+app.use(express.static(
+  path.resolve(__dirname,'..', 'build'),
+  { maxAge: '30d' },
+))
 
-app.use(indexController)
+app.get('*', (req, res, next) => {
+  const store = getStore()
+  serverRenderer(store)(req, res, next)
+})
 
 // start the app
 Loadable.preloadAll().then(() => {
@@ -16,7 +24,6 @@ Loadable.preloadAll().then(() => {
         if (error) {
             return console.log('something bad happened', error);
         }
-
-        console.log("listening on " + PORT + "...");
-    });
-});
+        console.log("listening on " + PORT + "...")
+    })
+})

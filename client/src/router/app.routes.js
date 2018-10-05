@@ -16,18 +16,21 @@ import PageLoader from '../containers/loader/pageloader.containers'
   Make the component dynamic so it's get dynamically imported
  */
 const AccountComponent = Loadable({
-  loader: () => import('../components/account/index'),
-  loading: () => <PageLoader />
+  loader: () => import(/* webpackChunkName: "dynamicModule" */ '../components/account/index'),
+  loading: () => <PageLoader />,
+	modules: ['dynamicModule']
 })
 
 const SignupComponent = Loadable({
-  loader: () => import('../components/account/signup/signup.component'),
-  loading: () => <PageLoader />
+  loader: () => import(/* webpackChunkName: "dynamicModule" */ '../components/account/signup/signup.component'),
+  loading: () => <PageLoader />,
+	modules: ['dynamicModule']
 })
 
 const LoginComponent = Loadable({
-  loader: () => import('../components/account/login/login.component'),
-  loading: () => <PageLoader />
+  loader: () => import(/* webpackChunkName: "dynamicModule" */ '../components/account/login/login.component'),
+  loading: () => <PageLoader />,
+	modules: ['dynamicModule']
 })
 
 class AppRouter extends Component {
