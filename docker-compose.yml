@@ -5,24 +5,38 @@ services:
     labels:
       com.oojobapi.description: "alterhop web app API server"
     build: ./server
+    environment:
+      REDIS_SERVER_PORT: ${REDIS_SERVER_PORT}
+      MONGO_SERVER_PORT: ${MONGO_SERVER_PORT}
+      MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
     expose:
       - ${API_SERVER_PORT}
     ports:
       - ${API_SERVER_PORT}:${API_SERVER_PORT}
+    depends_on:
+      - redis
+      - mongo
+    volumes:
+      - ./server:/usr/local/app/server
+      - /usr/local/app/server/node_modules
     networks:
       - oooonetwork
   mongo:
     container_name: altmongo
     image: mongo
     restart: always
+    environment:
+      MONGO_SERVER_PORT: ${MONGO_SERVER_PORT}
     ports:
     - ${MONGO_SERVER_PORT}:${MONGO_SERVER_PORT}
     networks:
       - oooonetwork
   redis:
-    container_name: redis
+    container_name: altredis
     image: redis
     restart: always
+    environment:
+      REDIS_SERVER_PORT: ${REDIS_SERVER_PORT}
     ports:
     - ${REDIS_SERVER_PORT}:${REDIS_SERVER_PORT}
     networks:
@@ -36,6 +50,9 @@ services:
       - ${UI_SERVER_PORT}
     ports:
       - ${UI_SERVER_PORT}:${UI_SERVER_PORT}
+    volumes:
+      - ./client:/usr/local/app/client
+      - /usr/local/app/client/node_modules
 
 networks:
   oooonetwork:

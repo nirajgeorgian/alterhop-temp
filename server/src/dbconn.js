@@ -6,7 +6,8 @@ import redis from 'redis'
 	@mongodb connection
 	Database connection for nosql database
 */
-const mongoUrl = `${process.env.MONGO_URL}/${process.env.MONGO_DB}`
+// const mongoUrl = `${process.env.MONGO_HOST}/${process.env.MONGO_INITDB_DATABASE}`
+const mongoUrl = `${process.env.MONGO_URL}/${process.env.MONGO_INITDB_DATABASE}` /* only for local */
 mongoose.set('bufferCommands', false)
 const mongooseConnect = mongoose.connect(mongoUrl, { autoReconnect: true, useNewUrlParser: true, connectTimeoutMS: 1000 })
 const mongodb = mongoose.connection
@@ -35,12 +36,12 @@ const redisClient = redis.createClient(`${process.env.REDIS_SERVER_PORT}`, `${pr
 const redisConnect = new Promise((resolve, reject) => {
 	redisClient.on('error', err => {
 		// redis error
-		process.stderr.write(`Error occured ${err.message()}`)
+		process.stderr.write(`Error occured ${err.message()}\n`)
 		reject(err.message())
 		process.exit()
 	})
 	redisClient.on('connect', () => {
-		process.stdout.write(`🚀 Connected to redis redis:6379`)
+		process.stdout.write(`🚀 Connected to redis redis:6379\n`)
 		resolve(redisClient)
 	})
 })
@@ -53,5 +54,6 @@ const resolveAll = async () => {
 export {
 	resolveAll,
 	redisConnect,
-	dbDisconnect
+	dbDisconnect,
+	redisClient
 }

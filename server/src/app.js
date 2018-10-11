@@ -1,7 +1,6 @@
 import express from 'express'
-import mongoose from 'mongoose'
 import { connectMiddleware } from './util/middleware.app'
-import './util/manageProcess.app' /* for managing process efficiently w.r.t exit code */
+// import './util/manageProcess.app' /* for managing process efficiently w.r.t exit code */
 import { resolveAll } from './dbconn'
 const app = express()
 const router = express.Router()

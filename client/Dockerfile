@@ -16,15 +16,15 @@ ENV PATH=$PATH:/usr/local/app/client/node_modules/.bin
 RUN npm install
 RUN rm -rf build
 COPY . .
-RUN npm run build
+# RUN npm run build
 
 # Bundle app source
 
-FROM nginx:1.15.2-alpine
-COPY ./build /var/www
-COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
+# FROM nginx:1.15.2-alpine
+# COPY ./build /var/www
+# COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
 EXPOSE 5000
+#
+# CMD ["nginx", "-g", "daemon off;"]
 
-CMD ["nginx", "-g", "daemon off;"]
-
-# CMD [ "npm", "start" ]
+CMD [ "npm", "start" ]
