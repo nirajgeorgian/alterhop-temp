@@ -1,5 +1,6 @@
 require('dotenv').config()
 import mongoose from 'mongoose'
+import redis from 'redis'
 
 /*
 	@mongodb connection

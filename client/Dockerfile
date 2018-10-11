@@ -1,4 +1,4 @@
-FROM node:8.12
+FROM node
 
 # Create app directory
 WORKDIR /usr/local/app/client

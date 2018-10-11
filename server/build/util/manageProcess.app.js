@@ -16,6 +16,7 @@ process.on('uncaughtException', function (err) {
 		process.exit(1);
 	} else {
 		process.stderr.write('Caught exception: ' + err.message + '\n');
+		process.stderr.write('Stack trace: ' + err.stack + '\n');
 		process.exit();
 	}
 });

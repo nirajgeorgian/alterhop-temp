@@ -19,6 +19,14 @@ services:
     - ${MONGO_SERVER_PORT}:${MONGO_SERVER_PORT}
     networks:
       - oooonetwork
+  redis:
+    container_name: redis
+    image: redis
+    restart: always
+    ports:
+    - ${REDIS_SERVER_PORT}:${REDIS_SERVER_PORT}
+    networks:
+      - oooonetwork
   frontend:
     container_name: alterhop-frontend
     labels:

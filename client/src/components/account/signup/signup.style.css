@@ -1,0 +1,6 @@
+.alt-form {
+  display: flex;
+  max-width: 1200px;
+  justify-content: center;
+  justify-items: center;
+}

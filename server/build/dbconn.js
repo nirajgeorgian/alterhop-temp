@@ -3,11 +3,15 @@
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.dbDisconnect = exports.resolveAll = undefined;
+exports.dbDisconnect = exports.redisConnect = exports.resolveAll = undefined;
 
 var _mongoose = require('mongoose');
 
 var _mongoose2 = _interopRequireDefault(_mongoose);
+
+var _redis = require('redis');
+
+var _redis2 = _interopRequireDefault(_redis);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -41,6 +45,24 @@ var dbDisconnect = function dbDisconnect(done) {
 	_mongoose2.default.disconnect(done);
 };
 
+/*
+	@redis connection
+	create a redis client and connection is established
+*/
+var redisClient = _redis2.default.createClient('' + process.env.REDIS_SERVER_PORT, 'localhost');
+var redisConnect = new Promise(function (resolve, reject) {
+	redisClient.on('error', function (err) {
+		// redis error
+		process.stderr.write('Error occured ' + err.message());
+		reject(err.message());
+		process.exit();
+	});
+	redisClient.on('connect', function () {
+		process.stdout.write('\uD83D\uDE80 Connected to redis redis:6379');
+		resolve(redisClient);
+	});
+});
+
 var resolveAll = function () {
 	var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
 		return regeneratorRuntime.wrap(function _callee$(_context) {
@@ -51,6 +73,10 @@ var resolveAll = function () {
 						return mongoConnect;
 
 					case 2:
+						_context.next = 4;
+						return redisConnect;
+
+					case 4:
 					case 'end':
 						return _context.stop();
 				}
@@ -64,5 +90,6 @@ var resolveAll = function () {
 }();
 
 exports.resolveAll = resolveAll;
+exports.redisConnect = redisConnect;
 exports.dbDisconnect = dbDisconnect;
 //# sourceMappingURL=dbconn.js.map

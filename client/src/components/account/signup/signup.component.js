@@ -5,6 +5,7 @@ import {
 	FormGroup, InputGroup, Spinner, Icon, Tooltip, Button, Intent
 } from '@blueprintjs/core'
 import { userSignupStartAction } from '../../../actionCreator/user.action.creator'
+import './signup.style.css'
 
 
 class Signup extends Component {
@@ -58,38 +59,40 @@ class Signup extends Component {
 			</Tooltip>
 		)
     return (
-      <FormGroup intent="primary">
-				<InputGroup
-					id="email"
-					large={true}
-					placeholder="Email ..."
-					leftIcon="paperclip"
-					type="email"
-					onChange={this.onInputChange}
-				/>
-        <InputGroup
-					id="username"
-					large={true}
-					placeholder="Username ..."
-					leftIcon="user"
-					onChange={this.onInputChange}
-				/>
-				<InputGroup
-					id="password"
-          large={true}
-          placeholder="Enter your password..."
-          rightElement={lockButton}
-					leftIcon="key"
-          type={showPassword ? "text" : "password"}
-					onChange={this.onInputChange}
-	      />
-				<Button
-					rightIcon="arrow-right"
-					intent={Intent.SUCCESS}
-					large={true}
-					onClick={this.onFormSubmit}
-				>Signup </Button>
-      </FormGroup>
+			<div className="alt-form">
+	      <FormGroup intent="primary">
+					<InputGroup
+						id="email"
+						large={true}
+						placeholder="Email ..."
+						leftIcon="paperclip"
+						type="email"
+						onChange={this.onInputChange}
+					/>
+	        <InputGroup
+						id="username"
+						large={true}
+						placeholder="Username ..."
+						leftIcon="user"
+						onChange={this.onInputChange}
+					/>
+					<InputGroup
+						id="password"
+	          large={true}
+	          placeholder="Enter your password..."
+	          rightElement={lockButton}
+						leftIcon="key"
+	          type={showPassword ? "text" : "password"}
+						onChange={this.onInputChange}
+		      />
+					<Button
+						rightIcon="arrow-right"
+						intent={Intent.SUCCESS}
+						large={true}
+						onClick={this.onFormSubmit}
+					>Signup </Button>
+	      </FormGroup>
+			</div>
     )
   }
 }
