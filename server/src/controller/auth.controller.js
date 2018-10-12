@@ -1,6 +1,8 @@
 import jwt from 'jsonwebtoken'
+import redis from 'redis'
 import UserModel from '../models/user.model'
 import response from '../util/response.response'
+import { redisClient } from '../dbconn'
 import { generateToken } from '../util/tokenGenerate'
 import { getAsync } from '../util/redis.util'
 
@@ -34,7 +36,7 @@ export const login = async (req, res) => {
 	return res.status(200).send(response(true, token))
 }
 
-const passwordToken = async (req, res) => {
+export const passwordToken = async (req, res) => {
 	const data = req.body
 	const email = data.email ? data.email : ''
 	const username = data.username ? data.username : ''

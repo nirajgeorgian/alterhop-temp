@@ -1,25 +1,27 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { Link } from 'react-router-dom'
 import {
 	FormGroup, InputGroup, Spinner, Icon, Tooltip, Button, Intent
 } from '@blueprintjs/core'
-import { userSignupStartAction } from '../../../actionCreator/user.action.creator'
-import './signup.style.css'
+import { connect } from 'react-redux'
+import {withRouter} from 'react-router-dom'
+import { bindActionCreators } from 'redux'
+import {confirmTokenStartAction} from '../../../actionCreator/user.action.creator'
 
-
-class Signup extends Component {
-
+class ForgetPasswordToken extends Component {
 	state = {
-		email: '',
-		username: '',
 		password: '',
+		againPassword: '',
 		helpers : {
 			showPassword: false,
 			loading: false,
 			disabled: false
 		}
+	}
+
+	componentWillMount() {
+		const {token} = this.props.match.params
+		this.props.confirmTokenStartAction({ token: token})
+		// debugger
 	}
 
 	handleLockClick = event => {
@@ -40,12 +42,8 @@ class Signup extends Component {
 
 	onFormSubmit = event => {
 		event.preventDefault()
-		const params = {
-			email: this.state.email,
-			username: this.state.username,
-			password: this.state.password
-		}
-		this.props.userSignupStartAction(this.state)
+		const params = this.state
+		this.props.confirmTokenStartAction(params)
 	}
 
   render() {
@@ -62,23 +60,8 @@ class Signup extends Component {
 			</Tooltip>
 		)
     return (
-			<div className="alt-form">
-	      <FormGroup intent="primary">
-					<InputGroup
-						id="email"
-						large={true}
-						placeholder="Email ..."
-						leftIcon="paperclip"
-						type="email"
-						onChange={this.onInputChange}
-					/>
-	        <InputGroup
-						id="username"
-						large={true}
-						placeholder="Username ..."
-						leftIcon="user"
-						onChange={this.onInputChange}
-					/>
+      <div>
+				<FormGroup intent="primary">
 					<InputGroup
 						id="password"
 	          large={true}
@@ -88,16 +71,23 @@ class Signup extends Component {
 	          type={showPassword ? "text" : "password"}
 						onChange={this.onInputChange}
 		      />
+					<InputGroup
+						id="againPassword"
+						large={true}
+						placeholder="Enter your password again..."
+						rightElement={lockButton}
+						leftIcon="key"
+						type={showPassword ? "text" : "password"}
+						onChange={this.onInputChange}
+					/>
 					<Button
 						rightIcon="arrow-right"
 						intent={Intent.SUCCESS}
 						large={true}
 						onClick={this.onFormSubmit}
-					>Signup </Button>
-				<br />
-				<Link to='/account/forgor_password'>Forget Password</Link>
-	      </FormGroup>
-			</div>
+					>Reset </Button>
+			</FormGroup>
+      </div>
     )
   }
 }
@@ -109,7 +99,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => {
-	return bindActionCreators({ userSignupStartAction }, dispatch)
+	return bindActionCreators({ confirmTokenStartAction }, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Signup)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ForgetPasswordToken));

@@ -1,4 +1,6 @@
-import {USER_AUTH_FAILURE, USER_AUTH_START, USER_AUTH_SUCCESS} from '../actionType/user.action.type'
+import {
+  USER_AUTH_FAILURE, USER_AUTH_START, USER_AUTH_SUCCESS
+} from '../actionType/user.action.type'
 
 const initialState = {
   token: null,

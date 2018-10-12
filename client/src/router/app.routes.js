@@ -22,15 +22,27 @@ const AccountComponent = Loadable({
 })
 
 const SignupComponent = Loadable({
-  loader: () => import(/* webpackChunkName: "dynamicModule" */ '../components/account/signup/signup.component'),
+  loader: () => import(/* webpackChunkName: "account" */ '../components/account/signup/signup.component'),
   loading: () => <PageLoader />,
-	modules: ['dynamicModule']
+modules: ['account']
 })
 
 const LoginComponent = Loadable({
-  loader: () => import(/* webpackChunkName: "dynamicModule" */ '../components/account/login/login.component'),
+  loader: () => import(/* webpackChunkName: "account" */ '../components/account/login/login.component'),
   loading: () => <PageLoader />,
-	modules: ['dynamicModule']
+modules: ['account']
+})
+
+const PasswordTokenComponent = Loadable({
+  loader: () => import(/* webpackChunkName: "password" */ '../components/account/passwordReset/passwordResetForm.component'),
+  loading: () => <PageLoader />,
+modules: ['password']
+})
+
+const PasswordResetComponent = Loadable({
+  loader: () => import(/* webpackChunkName: "password" */ '../components/account/passwordReset/passwordResetToken.component'),
+  loading: () => <PageLoader />,
+modules: ['password']
 })
 
 class AppRouter extends Component {
@@ -41,6 +53,8 @@ class AppRouter extends Component {
         <Route exact path='/account' component={AccountComponent} />
         <Route exact path='/account/login' component={LoginComponent} />
         <Route exact path='/account/signup' component={SignupComponent} />
+        <Route exact path='/account/forgor_password' component={PasswordTokenComponent} />
+        <Route exact path='/account/confirm_password/:token' component={PasswordResetComponent} />
         <Route component={PageNotFound} />
       </Switch>
     )

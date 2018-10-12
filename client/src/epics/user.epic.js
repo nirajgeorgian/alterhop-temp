@@ -2,12 +2,12 @@ import {filter, map, switchMap} from 'rxjs/operators'
 import {concat, of} from 'rxjs'
 import {ajax} from 'rxjs/ajax'
 import {ofType} from 'redux-observable'
-import {USER_AUTH_START, USER_SIGNUP_START} from '../actionType/user.action.type'
+import {USER_AUTH_START, USER_SIGNUP_START, PASSWORD_TOKEN_START, RESET_PASSWORD_START, CONFIRM_TOKEN_START} from '../actionType/user.action.type'
 import {
-  userAuthFailureAction,
-  userAuthSuccessAction,
-  userSignupFailureAction,
-  userSignupSuccessAction
+  userAuthFailureAction, userAuthSuccessAction,
+  userSignupFailureAction, userSignupSuccessAction,
+  passwordTokenFailureAction, passwordTokenSuccessAction,
+  resetPasswordSuccessAction, resetPasswordFailureAction
 } from '../actionCreator/user.action.creator'
 import {loadingFalse, loadingTrue} from "../actionCreator/loading.action.creator";
 
@@ -50,10 +50,12 @@ export const loginUserEpic = (action$, state$) => {
 export const signupUserEpic = (action$, state$) => action$.pipe(
   ofType(USER_SIGNUP_START),
   switchMap(action => {
+    const loadingOn = of(loadingTrue(true))
     const headers = { 'Content-Type': 'application/json' }
-    return ajax.post(process.env.API_URL + '/api/auth/signup', action.payload, headers).pipe(
+    const request = ajax.post('http://localhost:3000/api/auth/signup', action.payload, headers).pipe(
       map(signupResponse => {
-        if(signupResponse.status === 200 && signupResponse.response.success) {
+        if(signupResponse.status === 201 && signupResponse.response.success) {
+          console.log(signupResponse);
           return userSignupSuccessAction(signupResponse.response)
         } else {
           const res = {
@@ -63,6 +65,101 @@ export const signupUserEpic = (action$, state$) => action$.pipe(
           return userSignupFailureAction(res)
         }
       })
+    );
+    const loadingOff = of(loadingFalse(false))
+    return concat(
+      loadingOn,
+      request,
+      loadingOff
     )
   })
 )
+
+export const passwordTokenEpic = (action$, state$) => action$.pipe(
+  ofType(PASSWORD_TOKEN_START),
+  switchMap(action => {
+    const loadingOn = of(loadingTrue(true))
+    const headers = { 'Content-Type': 'application/json' }
+    const request = ajax.post('http://localhost:3000/api/auth/password_token', action.payload, headers).pipe(
+      map(tokenResponse => {
+        if(tokenResponse.status === 200 && tokenResponse.response.success) {
+          const res = {
+            password_token: tokenResponse.response.data
+          }
+          return passwordTokenSuccessAction(res)
+        } else {
+          const res = {
+            error: tokenResponse.response.data
+          }
+          return passwordTokenFailureAction(res)
+        }
+      })
+    )
+    const loadingOff = of(loadingFalse(false))
+    return concat(
+      loadingOn,
+      request,
+      loadingOff
+    )
+  })
+);
+
+export const resetPasswordEpic = (action$, state$) => action$.pipe(
+  ofType(RESET_PASSWORD_START),
+  switchMap(action => {
+    const loadingOn = of(loadingTrue(true))
+    const headers = { 'Content-Type': 'application/json' }
+    const request = ajax.post('http://localhost:3000/api/auth/password_token', action.payload, headers).pipe(
+      map(tokenResponse => {
+        if(tokenResponse.status === 200 && tokenResponse.response.success) {
+          const res = {
+            password_token: tokenResponse.response.data,
+            status: true
+          }
+          return resetPasswordSuccessAction(res)
+        } else {
+          const res = {
+            error: tokenResponse.response.data
+          }
+          return resetPasswordFailureAction(res)
+        }
+      })
+    )
+    const loadingOff = of(loadingFalse(false))
+    return concat(
+      loadingOn,
+      request,
+      loadingOff
+    )
+  })
+);
+
+export const confirmTokenEpic = (action$, state$) => action$.pipe(
+  ofType(CONFIRM_TOKEN_START),
+  switchMap(action => {
+    const loadingOn = of(loadingTrue(true))
+    const headers = { 'Content-Type': 'application/json' }
+    const request = ajax.post('http://localhost:5000/api/auth/confirm_token', action.payload, headers).pipe(
+      map(tokenResponse => {
+        if(tokenResponse.status === 200 && tokenResponse.response.success) {
+          const res = {
+            password_token: tokenResponse.response.data,
+            status: true
+          }
+          return resetPasswordSuccessAction(res)
+        } else {
+          const res = {
+            error: tokenResponse.response.data
+          }
+          return resetPasswordFailureAction(res)
+        }
+      })
+    )
+    const loadingOff = of(loadingFalse(false))
+    return concat(
+      loadingOn,
+      request,
+      loadingOff
+    )
+  })
+);
