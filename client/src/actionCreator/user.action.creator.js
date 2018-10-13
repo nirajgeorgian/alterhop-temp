@@ -4,7 +4,7 @@ import {
   PASSWORD_TOKEN_SUCCESS, PASSWORD_TOKEN_START, PASSWORD_TOKEN_FAILURE,
   CONFIRM_TOKEN_START, CONFIRM_TOKEN_SUCCESS, CONFIRM_TOKEN_FAILURE,
   RESET_PASSWORD_START, RESET_PASSWORD_SUCCESS, RESET_PASSWORD_FAILURE,
-  RESET_USER
+  RESET_USER, RESET_PASSWORD, RESET_PASSWORD_ERROR
 } from '../actionType/user.action.type'
 
 /*
@@ -110,7 +110,9 @@ export const userSignupFailureAction = payload => {
 export const passwordTokenFailureAction = payload => {
   return {
     type: PASSWORD_TOKEN_FAILURE,
-    error: payload.error
+    payload: {
+      error: payload.error
+    }
   }
 }
 
@@ -134,5 +136,17 @@ export const resetPasswordFailureAction = payload => {
 export const resetUser = () => {
   return {
     type: RESET_USER
+  }
+}
+
+export const resetPassword = () => {
+  return {
+    type: RESET_PASSWORD
+  }
+}
+
+export const resetPasswordError = () => {
+  return {
+    type: RESET_PASSWORD_ERROR
   }
 }

@@ -30,7 +30,10 @@ export const userReducer = (state = initialState, action) => {
         ...action.payload
       }
     case RESET_USER:
-      return initialState
+      return {
+        ...state,
+        initialState
+      }
     default:
       return state
   }

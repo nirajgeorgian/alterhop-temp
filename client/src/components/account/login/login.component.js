@@ -7,7 +7,6 @@ import {
 import { userAuthStartAction } from '../../../actionCreator/user.action.creator'
 import {resetUser} from '../../../actionCreator/user.action.creator'
 
-
 export const AppToaster = Toaster.create({
     className: "recipe-toaster",
     position: Position.TOP,

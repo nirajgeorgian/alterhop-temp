@@ -68,7 +68,7 @@ export const passwordToken = async (req, res) => {
  * @return { success, message }
  * Mutation to confirm password reset token and generate token for updating password
  */
-const confirmToken = async (_, { input }, { redisClient, getAsync }) => {
+export const confirmToken = async (req, res) => {
 	const data = req.body
 	const token = data.token
 	const email = data.email ? data.email : ''
@@ -86,7 +86,7 @@ const confirmToken = async (_, { input }, { redisClient, getAsync }) => {
 			return res.status(401).send(response(false, `no value for provider key`))
 		}
 	}
-	const user = await User.findOne({$or: [{ email: email }, { username: username }]})
+	const user = await UserModel.findOne({$or: [{ email: email }, { username: username }]})
 	if(!user) {
 		if(email === '' && username === '') {
 			return res.status(401).send(response(false, `Please pass email or username`))
@@ -120,7 +120,7 @@ const confirmToken = async (_, { input }, { redisClient, getAsync }) => {
  * @return { success, message }
  * Mutation to confirm reset password with token
  */
-const resetPassword = async (_, { input }, { redisClient, getAsync }) => {
+const resetPassword = async (req, res) => {
 	const data = req.body
 	const token = data.token
 	const email = data.email ? data.email : ''

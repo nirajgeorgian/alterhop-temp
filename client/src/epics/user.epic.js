@@ -65,7 +65,6 @@ export const signupUserEpic = (action$, state$) => action$.pipe(
     const request = ajax.post('http://localhost:3000/api/auth/signup', action.payload, headers).pipe(
       map(signupResponse => {
         if(signupResponse.status === 201 && signupResponse.response.success) {
-          console.log(signupResponse);
           return userSignupSuccessAction(signupResponse.response)
         } else {
           const res = {
@@ -113,7 +112,16 @@ export const passwordTokenEpic = (action$, state$) => action$.pipe(
           }
           return passwordTokenFailureAction(res)
         }
-      })
+      }),
+      catchError(error => {
+        const res = {
+          error: error.response.data
+        }
+        return of(passwordTokenFailureAction(res))
+      }),
+      takeUntil(action$.pipe(
+        ofType(CANCEL_REQUEST)
+      ))
     )
     const loadingOff = of(loadingFalse(false))
     return concat(

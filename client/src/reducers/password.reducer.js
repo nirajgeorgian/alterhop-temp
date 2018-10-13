@@ -1,12 +1,14 @@
 import {
   PASSWORD_TOKEN_START, PASSWORD_TOKEN_SUCCESS, PASSWORD_TOKEN_FAILURE,
   CONFIRM_TOKEN_START, CONFIRM_TOKEN_SUCCESS, CONFIRM_TOKEN_FAILURE,
-  RESET_PASSWORD_START, RESET_PASSWORD_SUCCESS, RESET_PASSWORD_FAILURE
+  RESET_PASSWORD_START, RESET_PASSWORD_SUCCESS, RESET_PASSWORD_FAILURE,
+  RESET_PASSWORD_ERROR, RESET_PASSWORD
 } from '../actionType/user.action.type'
 
 const initialState = {
   password_token: null,
-  confirm_token: null
+  confirm_token: null,
+  error: ''
 }
 
 export const passwordReducer = (state = initialState, action) => {
@@ -53,6 +55,16 @@ export const passwordReducer = (state = initialState, action) => {
             ...state,
             ...action.payload
           }
+        case RESET_PASSWORD_ERROR:
+            return {
+              ...state,
+              error: ''
+            }
+        case RESET_PASSWORD:
+              return {
+                ...state,
+                initialState
+              }
     default:
       return state
   }
