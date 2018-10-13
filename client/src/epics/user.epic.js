@@ -1,8 +1,8 @@
-import {filter, map, switchMap} from 'rxjs/operators'
-import {concat, of} from 'rxjs'
+import {filter, map, switchMap, catchError, mergeMap, takeUntil} from 'rxjs/operators'
+import {concat, of, merge} from 'rxjs'
 import {ajax} from 'rxjs/ajax'
 import {ofType} from 'redux-observable'
-import {USER_AUTH_START, USER_SIGNUP_START, PASSWORD_TOKEN_START, RESET_PASSWORD_START, CONFIRM_TOKEN_START} from '../actionType/user.action.type'
+import {USER_AUTH_START, CANCEL_REQUEST, USER_SIGNUP_START, PASSWORD_TOKEN_START, RESET_PASSWORD_START, CONFIRM_TOKEN_START} from '../actionType/user.action.type'
 import {
   userAuthFailureAction, userAuthSuccessAction,
   userSignupFailureAction, userSignupSuccessAction,
@@ -34,7 +34,17 @@ export const loginUserEpic = (action$, state$) => {
             }
             return userAuthFailureAction(res)
           }
-        })
+        }),
+        catchError(error => {
+          const res = {
+            error: error.response.data,
+            user: payload.username
+          }
+          return of(userAuthFailureAction(res))
+        }),
+        takeUntil(action$.pipe(
+          ofType(CANCEL_REQUEST)
+        ))
       )
       const loadingOff = of(loadingFalse(false))
       // merge both the result's
@@ -64,7 +74,17 @@ export const signupUserEpic = (action$, state$) => action$.pipe(
           }
           return userSignupFailureAction(res)
         }
-      })
+      }),
+      catchError(error => {
+        const res = {
+          error: error.response.data,
+          user: action.payload.username
+        }
+        return of(userSignupFailureAction(res))
+      }),
+      takeUntil(action$.pipe(
+        ofType(CANCEL_REQUEST)
+      ))
     );
     const loadingOff = of(loadingFalse(false))
     return concat(

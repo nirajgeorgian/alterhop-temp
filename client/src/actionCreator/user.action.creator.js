@@ -3,7 +3,8 @@ import {
   USER_SIGNUP_START, USER_SIGNUP_SUCCESS, USER_SIGNUP_FAILURE,
   PASSWORD_TOKEN_SUCCESS, PASSWORD_TOKEN_START, PASSWORD_TOKEN_FAILURE,
   CONFIRM_TOKEN_START, CONFIRM_TOKEN_SUCCESS, CONFIRM_TOKEN_FAILURE,
-  RESET_PASSWORD_START, RESET_PASSWORD_SUCCESS, RESET_PASSWORD_FAILURE
+  RESET_PASSWORD_START, RESET_PASSWORD_SUCCESS, RESET_PASSWORD_FAILURE,
+  RESET_USER
 } from '../actionType/user.action.type'
 
 /*
@@ -89,16 +90,20 @@ export const resetPasswordSuccessAction = payload => {
 export const userAuthFailureAction = payload => {
   return {
     type: USER_AUTH_FAILURE,
-    user: payload.user,
-    error: payload.error
+    payload: {
+      user: payload.user,
+      error: payload.error
+    }
   }
 }
 
 export const userSignupFailureAction = payload => {
   return {
     type: USER_SIGNUP_FAILURE,
-    user: payload.user,
-    error: payload.error
+    payload: {
+      user: payload.user,
+      error: payload.error
+    }
   }
 }
 
@@ -120,5 +125,14 @@ export const resetPasswordFailureAction = payload => {
   return {
     type: RESET_PASSWORD_FAILURE,
     payload
+  }
+}
+
+/*
+ reset state for resetting
+ */
+export const resetUser = () => {
+  return {
+    type: RESET_USER
   }
 }

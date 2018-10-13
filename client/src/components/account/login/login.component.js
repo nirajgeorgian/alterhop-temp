@@ -2,9 +2,16 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
-	FormGroup, InputGroup, Spinner, Icon, Tooltip, Button, Intent
+	FormGroup, InputGroup, Spinner, Icon, Tooltip, Button, Intent, Position, Toaster
 } from '@blueprintjs/core'
 import { userAuthStartAction } from '../../../actionCreator/user.action.creator'
+import {resetUser} from '../../../actionCreator/user.action.creator'
+
+
+export const AppToaster = Toaster.create({
+    className: "recipe-toaster",
+    position: Position.TOP,
+});
 
 class Login extends Component {
   state = {
@@ -27,17 +34,29 @@ class Login extends Component {
 		})
 	}
 
+	showToast = message => {
+		AppToaster.show({
+			message,
+			onDismiss: () => this.props.resetUser()
+		})
+	}
+
   onInputChange = event => {
     this.setState({
       [event.target.id]: event.target.value
     })
   }
 
-  onFormSubmit = async event => {
+  onFormSubmit = event => {
     event.preventDefault()
-    const dodo = await this.props.userAuthStartAction(this.state)
+    this.props.userAuthStartAction(this.state)
+		this.setState({
+			username: '',
+			password: ''
+		})
   }
   render() {
+		const {error} = this.props.user
     const { showPassword, loading, disabled } = this.state.helpers
     const userSpinner = true ? <Spinner intent="primary" size={Icon.SIZE_STANDARD} /> : null
 		const lockButton = (
@@ -51,6 +70,9 @@ class Login extends Component {
 				</Button>
 			</Tooltip>
 		)
+		if(error.length && !this.props.loading) {
+				this.showToast(error)
+		}
     return (
       <FormGroup intent="primary">
         <InputGroup
@@ -59,6 +81,7 @@ class Login extends Component {
 					placeholder="Username ..."
 					leftIcon="paperclip"
 					type="text"
+					value={this.state.username}
 					onChange={this.onInputChange}
 				/>
         <InputGroup
@@ -68,14 +91,16 @@ class Login extends Component {
           rightElement={lockButton}
 					leftIcon="key"
           type={showPassword ? "text" : "password"}
+					value={this.state.password}
 					onChange={this.onInputChange}
 	      />
 				<Button
 					rightIcon="arrow-right"
 					intent={Intent.SUCCESS}
 					large={true}
+					disabled = {this.props.loading ? true : false}
 					onClick={this.onFormSubmit}
-				>Signup </Button>
+				>Login </Button>
       </FormGroup>
     )
   }
@@ -88,7 +113,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({userAuthStartAction}, dispatch)
+  return bindActionCreators({userAuthStartAction, resetUser}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login)

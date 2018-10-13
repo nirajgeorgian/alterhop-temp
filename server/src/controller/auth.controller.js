@@ -22,11 +22,11 @@ export const login = async (req, res) => {
 	const data = req.body
 	const user = await UserModel.findOne({ username: data.username })
 	if(!user) {
-		return await res.status(401).send(response(false, `No User exist's for ${data.username}`))
+		return await res.status(401).send(response(false, `No User exist's`))
 	}
 	const verified = user.verifyPassword(data.password)
 	if(!verified) {
-		return res.status(401).send(response(false, `Sorry the password did not matched:=> ${data.password}`))
+		return res.status(401).send(response(false, `Sorry the password did not matched.`))
 	}
 	const token = jwt.sign({
 		id: user.id,

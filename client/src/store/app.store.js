@@ -6,6 +6,7 @@ import {createEpicMiddleware} from 'redux-observable'
 import logger from 'redux-logger'
 import {persistReducer, persistStore} from 'redux-persist'
 import localforage from "localforage" // defaults to localStorage for web
+import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2'
 import {rootEpics} from '../epics/app.epic'
 /*
   import your root reducer here
@@ -27,7 +28,6 @@ localforage.ready().then(function() {
 const persistConfig = {
   key: 'root',
   storage: localforage,
-  whitelist: ['user']
 }
 
 /*

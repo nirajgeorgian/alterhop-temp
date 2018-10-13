@@ -3,12 +3,19 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Link } from 'react-router-dom'
 import {
-	FormGroup, InputGroup, Spinner, Icon, Tooltip, Button, Intent
+	FormGroup, InputGroup, Spinner, Icon, Tooltip, Button, Intent, Position, Toaster
 } from '@blueprintjs/core'
 import { userSignupStartAction } from '../../../actionCreator/user.action.creator'
+import {resetUser} from '../../../actionCreator/user.action.creator'
 import './signup.style.css'
 
 
+export const AppToaster = Toaster.create({
+    className: "recipe-toaster",
+    position: Position.TOP,
+		canEscapeKeyClear: true,
+		autoFocus: true
+});
 class Signup extends Component {
 
 	state = {
@@ -32,23 +39,36 @@ class Signup extends Component {
 		})
 	}
 
+	showToast = message => {
+		AppToaster.show({
+			message,
+			onDismiss: () => this.props.resetUser()
+		})
+	}
+
 	onInputChange = event => {
 		this.setState({
 			[event.target.id]: event.target.value
 		})
 	}
 
-	onFormSubmit = event => {
+	onFormSubmit = async event => {
 		event.preventDefault()
 		const params = {
 			email: this.state.email,
 			username: this.state.username,
 			password: this.state.password
 		}
-		this.props.userSignupStartAction(this.state)
+		await this.props.userSignupStartAction(this.state)
+		this.setState({
+			email: '',
+			username: '',
+			password: '',
+		})
 	}
 
   render() {
+		const {error} = this.props.user
 		const { showPassword, loading, disabled } = this.state.helpers
 		const lockButton = (
 			<Tooltip content={`${showPassword ? "Hide" : "Show"} Password`}>
@@ -61,6 +81,9 @@ class Signup extends Component {
 				</Button>
 			</Tooltip>
 		)
+		if(error.length && !this.props.loading) {
+				this.showToast(error)
+		}
     return (
 			<div className="alt-form">
 	      <FormGroup intent="primary">
@@ -92,6 +115,7 @@ class Signup extends Component {
 						rightIcon="arrow-right"
 						intent={Intent.SUCCESS}
 						large={true}
+						disabled = {this.props.loading ? true : false}
 						onClick={this.onFormSubmit}
 					>Signup </Button>
 				<br />
@@ -109,7 +133,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => {
-	return bindActionCreators({ userSignupStartAction }, dispatch)
+	return bindActionCreators({ userSignupStartAction, resetUser }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Signup)
