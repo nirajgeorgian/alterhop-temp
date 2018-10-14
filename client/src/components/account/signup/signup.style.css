@@ -1,6 +1,51 @@
+@import url('https://fonts.googleapis.com/css?family=Kosugi+Maru');
+
+.main {
+  margin: 0;
+  padding: 0;
+  height : 100vh;
+  background-image: linear-gradient(to top, #88d3ce 0%, #6e45e2 100%);}
+.alt-main {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  padding: 5%;
+  position: absolute;
+  margin :7% 8%;
+  border: 1px solid #fff;
+  border-radius: 10px;
+  background: #fff;
+}
+
+img {  
+  width: 35%;
+  height: 35%;
+  margin-top: 5%;
+}
+.bp3-round {
+  margin: 3% 0;
+}
+
 .alt-form {
-  display: flex;
-  max-width: 1200px;
-  justify-content: center;
-  justify-items: center;
+margin : auto 0;
+}
+ .alt-text {
+    font-family: "Kosugi Maru",sans-serif;
+    font-size: 1.45rem;
+    margin: 20px 0;
+    text-align: center;
+  }
+  .foot{
+     text-align: center;
+  }
+@media(max-width: 768px) {
+  .alt-main{
+    display: flex;
+    flex-direction: column;
+    margin :20% 5%;
+  }
+
+  img {  
+    width: 45%;
+    height: 45%;
+  }
 }
