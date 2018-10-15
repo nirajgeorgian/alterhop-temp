@@ -69,6 +69,7 @@ export const passwordToken = async (req, res) => {
  * Mutation to confirm password reset token and generate token for updating password
  */
 export const confirmToken = async (req, res) => {
+	console.log("server confirm token");
 	const data = req.body
 	const token = data.token
 	const email = data.email ? data.email : ''

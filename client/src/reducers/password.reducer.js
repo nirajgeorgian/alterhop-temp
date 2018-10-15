@@ -7,15 +7,19 @@ import {
 
 const initialState = {
   password_token: null,
+  username: '',
+  email: '',
   confirm_token: null,
-  error: ''
+  error: '',
+  status: false
 }
 
 export const passwordReducer = (state = initialState, action) => {
   switch(action.type) {
     case PASSWORD_TOKEN_START:
       return {
-        ...state
+        ...state,
+        status: false
       }
     case PASSWORD_TOKEN_SUCCESS:
       return {
@@ -29,7 +33,8 @@ export const passwordReducer = (state = initialState, action) => {
       }
       case CONFIRM_TOKEN_START:
         return {
-          ...state
+          ...state,
+          status: false
         }
       case CONFIRM_TOKEN_SUCCESS:
         return {
@@ -43,7 +48,8 @@ export const passwordReducer = (state = initialState, action) => {
         }
         case RESET_PASSWORD_START:
           return {
-            ...state
+            ...state,
+            status: false
           }
         case RESET_PASSWORD_SUCCESS:
           return {

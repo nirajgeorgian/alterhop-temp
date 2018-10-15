@@ -7,7 +7,8 @@ import {
   userAuthFailureAction, userAuthSuccessAction,
   userSignupFailureAction, userSignupSuccessAction,
   passwordTokenFailureAction, passwordTokenSuccessAction,
-  resetPasswordSuccessAction, resetPasswordFailureAction
+  resetPasswordSuccessAction, resetPasswordFailureAction,
+  confirmTokenFailureAction, confirmTokenSuccessAction
 } from '../actionCreator/user.action.creator'
 import {loadingFalse, loadingTrue} from "../actionCreator/loading.action.creator";
 
@@ -102,8 +103,12 @@ export const passwordTokenEpic = (action$, state$) => action$.pipe(
     const request = ajax.post('http://localhost:3000/api/auth/password_token', action.payload, headers).pipe(
       map(tokenResponse => {
         if(tokenResponse.status === 200 && tokenResponse.response.success) {
+          const username = action.payload.username ? action.payload.username : ''
+          const email = action.payload.email ? action.payload.email : ''
           const res = {
-            password_token: tokenResponse.response.data
+            password_token: tokenResponse.response.data,
+            username,
+            email
           }
           return passwordTokenSuccessAction(res)
         } else {
@@ -151,7 +156,16 @@ export const resetPasswordEpic = (action$, state$) => action$.pipe(
           }
           return resetPasswordFailureAction(res)
         }
-      })
+      }),
+      catchError(error => {
+        const res = {
+          error: error.response.data
+        }
+        return of(passwordTokenFailureAction(res))
+      }),
+      takeUntil(action$.pipe(
+        ofType(CANCEL_REQUEST)
+      ))
     )
     const loadingOff = of(loadingFalse(false))
     return concat(
@@ -167,21 +181,36 @@ export const confirmTokenEpic = (action$, state$) => action$.pipe(
   switchMap(action => {
     const loadingOn = of(loadingTrue(true))
     const headers = { 'Content-Type': 'application/json' }
-    const request = ajax.post('http://localhost:5000/api/auth/confirm_token', action.payload, headers).pipe(
+    console.log(action.payload);
+    // debugger
+    const request = ajax.post('http://localhost:3000/api/auth/confirm_token', action.payload, headers).pipe(
       map(tokenResponse => {
         if(tokenResponse.status === 200 && tokenResponse.response.success) {
+          const username = action.payload.username ? action.payload.username : ''
+          const email = action.payload.email ? action.payload.email : ''
           const res = {
-            password_token: tokenResponse.response.data,
+            confirm_token: tokenResponse.response.data,
+            username,
+            email,
             status: true
           }
-          return resetPasswordSuccessAction(res)
+          return confirmTokenSuccessAction(res)
         } else {
           const res = {
             error: tokenResponse.response.data
           }
-          return resetPasswordFailureAction(res)
+          return confirmTokenFailureAction(res)
         }
-      })
+      }),
+      catchError(error => {
+        const res = {
+          error: error.response.data
+        }
+        return of(confirmTokenFailureAction(res))
+      }),
+      takeUntil(action$.pipe(
+        ofType(CANCEL_REQUEST)
+      ))
     )
     const loadingOff = of(loadingFalse(false))
     return concat(

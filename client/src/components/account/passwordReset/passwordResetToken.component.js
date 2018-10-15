@@ -5,12 +5,15 @@ import {
 import { connect } from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import { bindActionCreators } from 'redux'
-import {confirmTokenStartAction} from '../../../actionCreator/user.action.creator'
+import {confirmTokenStartAction, resetPasswordStartAction} from '../../../actionCreator/user.action.creator'
 
 class ForgetPasswordToken extends Component {
 	state = {
 		password: '',
 		againPassword: '',
+		username: '',
+		email: '',
+		token: '',
 		helpers : {
 			showPassword: false,
 			loading: false,
@@ -20,7 +23,9 @@ class ForgetPasswordToken extends Component {
 
 	componentWillMount() {
 		const {token} = this.props.match.params
-		this.props.confirmTokenStartAction({ token: token})
+		this.setState({
+			token
+		})
 		// debugger
 	}
 
@@ -40,10 +45,28 @@ class ForgetPasswordToken extends Component {
 		})
 	}
 
-	onFormSubmit = event => {
+	onFormSubmit = async event => {
 		event.preventDefault()
-		const params = this.state
-		this.props.confirmTokenStartAction(params)
+		const token = this.state.token
+		const username = this.state.username
+		const email = this.state.email
+		await this.props.confirmTokenStartAction({ token, username })
+	}
+
+	onResetPassword = async event => {
+		const {status} = this.props.password
+		if(status) {
+			const {confirm_token, username} = this.props.password
+			if(confirm_token) {
+				const params = {
+					password: this.state.password,
+					againPassword: this.state.againPassword,
+					token: confirm_token,
+					username
+				}
+				this.props.resetPasswordStartAction(params)
+			}
+		}
 	}
 
   render() {
@@ -62,6 +85,15 @@ class ForgetPasswordToken extends Component {
     return (
       <div>
 				<FormGroup intent="primary">
+					<InputGroup
+						id="username"
+	          large={true}
+						value={this.state.username}
+	          placeholder="Enter your username..."
+	          rightElement={lockButton}
+						leftIcon="key"
+						onChange={this.onInputChange}
+		      />
 					<InputGroup
 						id="password"
 	          large={true}
@@ -85,7 +117,13 @@ class ForgetPasswordToken extends Component {
 						intent={Intent.SUCCESS}
 						large={true}
 						onClick={this.onFormSubmit}
-					>Reset </Button>
+					>Validate Token </Button>
+					<Button
+						rightIcon="arrow-right"
+						intent={Intent.SUCCESS}
+						large={true}
+						onClick={this.onResetPassword}
+					>Reset Password</Button>
 			</FormGroup>
       </div>
     )
@@ -99,7 +137,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => {
-	return bindActionCreators({ confirmTokenStartAction }, dispatch)
+	return bindActionCreators({ confirmTokenStartAction, resetPasswordStartAction }, dispatch)
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ForgetPasswordToken));
