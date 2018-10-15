@@ -8,7 +8,7 @@
 .alt-main {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  padding: 5%;
+  padding: 30px;
   position: absolute;
   margin :7% 8%;
   border: 1px solid #fff;
@@ -41,11 +41,28 @@ margin : auto 0;
   .alt-main{
     display: flex;
     flex-direction: column;
-    margin :20% 5%;
+    z-index: 1;
+    margin-top: 20px;
+  } 
+
+  img {  
+    width: 45%;
+    height: 45%;
+    position: relative;
+  }
+}
+
+@media(max-width:400px) {
+  .alt-main{
+    display: flex;
+    flex-direction: column;
+    margin :25% 5% 20% 5%;
+    position: absolute;
   }
 
   img {  
     width: 45%;
     height: 45%;
+   
   }
 }

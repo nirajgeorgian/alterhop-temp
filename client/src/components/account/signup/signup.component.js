@@ -121,7 +121,7 @@ class Signup extends Component {
                 id="password"
                 className="bp3-round"
                 large={true}
-                placeholder="Enter your password..."
+                placeholder="Password..."
                 rightElement={lockButton}
                 leftIcon="key"
                 type={showPassword ? "text" : "password"}
