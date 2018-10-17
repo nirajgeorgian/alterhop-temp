@@ -45,7 +45,7 @@ class PasswordResetForm extends Component {
 		}
 		return (
 
-			<div style={{padding: "30px", textAlign: "center", marginTop: "10%" }}>
+			<div style={{padding: "30px", textAlign: "center", margin: " 0 25%", width : "50%" }}>
 				<h3 className="bp3-heading">Forgot User Credentials</h3>
 				<FormGroup intent="primary">
 					<InputGroup

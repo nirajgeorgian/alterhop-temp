@@ -1,9 +1,14 @@
-import React from 'react'
+import React from "react";
 
 const PageLoader = props => (
-	<div>
-		loading...
-	</div>
-)
+  <div>
+    <div className="lds-ellipsis">
+      <div />
+      <div />
+      <div />
+      <div />
+    </div>
+  </div>
+);
 
-export default PageLoader
+export default PageLoader;

@@ -1,27 +1,59 @@
 @import url('https://fonts.googleapis.com/css?family=Kosugi+Maru');
 
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+body {
+  line-height: 1;
+}
+
 .main {
-  margin: 0;
-  padding: 0;
   height : 100vh;
+  margin: 0 auto;
+	padding: 0 auto;
+	font-family: 'Open Sans', sans-serif;
+	color: #777;
+	font-weight:300;
+	font-size: 16px;
   background-image: linear-gradient(to top, #88d3ce 0%, #6e45e2 100%);
 }
 .alt-main {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  padding: 30px;
-  /* position: absolute; */
-  width: 80%;
-  margin: 10%;
+  margin: 40px 10%;
   position: absolute;
-  border: 1px solid #fff;
-  border-radius: 10px;
+  width: 80%;
+  height: 80%;
+	background: #fff;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-o-border-radius: 5px;
+	-ms-border-radius: 5px;
+	border-radius: 5px;
+	padding: 40px;
   background: #fff;
 }
 img {  
   width: 55%;
   height: 55%;
-  margin-top: 5%;
+  margin : 0 auto;
 }
 .bp3-round {
   margin: 3% 0;
@@ -43,11 +75,17 @@ margin : auto 0;
   .alt-main{
     display: flex;
     flex-direction: column;
+    height: 90%;
+    padding: 3em;
+    margin-bottom: 15px;
   } 
-
+  .alt-form {
+    margin-bottom : 10px;
+  }
   img {  
-    width: 45%;
-    height: 45%;
+    width: 35%;
+    height: 35%;
+    margin : 0 auto;
     position: relative;
   }
 }
@@ -63,6 +101,6 @@ margin : auto 0;
   img {  
     width: 45%;
     height: 45%;
-   
+    margin-top: 40px;
   }
 }

@@ -45,6 +45,17 @@ const PasswordResetComponent = Loadable({
 modules: ['password']
 })
 
+const Editprofile = Loadable({
+  loader : () => import('../components/user/profileEdit/Editprofile.component'),
+  loading: () => <PageLoader />,
+modules: ['user']
+})
+const User = Loadable({
+  loader : () => import('../components/user/index'),
+  loading: () => <PageLoader />,
+modules: ['user']
+})
+
 class AppRouter extends Component {
   render() {
     return (
@@ -53,8 +64,10 @@ class AppRouter extends Component {
         <Route exact path='/account' component={AccountComponent} />
         <Route exact path='/account/login' component={LoginComponent} />
         <Route exact path='/account/signup' component={SignupComponent} />
-        <Route exact path='/account/forgor_password' component={PasswordTokenComponent} />
+        <Route exact path='/account/forgot_password' component={PasswordTokenComponent} />
         <Route exact path='/account/confirm_password/:token' component={PasswordResetComponent} />
+        <Route exact path='/user' component={User} />
+        <Route exact path='/user/edit-profile' component={Editprofile} />
         <Route component={PageNotFound} />
       </Switch>
     )

@@ -8,7 +8,8 @@ class Account extends Component {
 			<div>
 				Account component here<br />
 				<Link to='/account/signup'>signup</Link><br />
-				<Link to='/account/login'>login</Link>
+				<Link to='/account/login'>login</Link><br />
+				<Link to='/user'>User Dashboard</Link>
 			</div>
 		)
 	}

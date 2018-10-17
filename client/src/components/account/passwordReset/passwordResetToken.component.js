@@ -60,7 +60,8 @@ class ForgetPasswordToken extends Component {
 			</Tooltip>
 		)
     return (
-      <div  style={{padding: "30px", textAlign: "center", marginTop: "10%" }} >
+      <div  style={{padding: "30px", textAlign: "center", margin: " 0 25%", width : "50%" }} >
+			<h3 className="bp3-heading">Reset Password</h3>
 				<FormGroup intent="primary">
 					<InputGroup
 						id="password"
@@ -71,6 +72,7 @@ class ForgetPasswordToken extends Component {
 	          type={showPassword ? "text" : "password"}
 						onChange={this.onInputChange}
 		      />
+					<br />
 					<InputGroup
 						id="againPassword"
 						large={true}
@@ -80,11 +82,12 @@ class ForgetPasswordToken extends Component {
 						type={showPassword ? "text" : "password"}
 						onChange={this.onInputChange}
 					/>
+					<br />
 					<Button
 						rightIcon="arrow-right"
 						intent={Intent.SUCCESS}
 						fill={true}
-						style={{ borderRadius: "50px" }}
+						style={{ borderRadius: "50px", margin: "10px 0" }}
 						large={true}
 						onClick={this.onFormSubmit}
 					>Reset </Button>

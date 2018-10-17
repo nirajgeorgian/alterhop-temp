@@ -1,3 +1,5 @@
+// eslint-disable-next-line 
+
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Loadable from 'react-loadable'

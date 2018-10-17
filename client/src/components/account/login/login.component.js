@@ -81,14 +81,14 @@ class Login extends Component {
 							<img src='https://i1.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png?fit=256%2C256&quality=100&ssl=1' />
 						</center>
 					</div>
-
+				
 					<div className="alt-form">
 						<div className="alt-text">
 						<center>
 							<div className="log-in">LOG IN</div>
 							</center>
 						</div>
-
+			
 						<FormGroup intent="primary">
 							<InputGroup
 								id="username"
@@ -124,7 +124,7 @@ class Login extends Component {
 
 						 
 						<div className="foot">
-						Forgot <Link to='/account/forgor_password'>Username/Password</Link>
+						Forgot <Link to='/account/forgot_password'>Username/Password</Link>
 						<br />
 						<span className="bp3-text-muted" style={{textAlign : "center"}}>---OR---</span>
 						<br />
