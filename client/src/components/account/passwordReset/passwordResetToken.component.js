@@ -60,7 +60,7 @@ class ForgetPasswordToken extends Component {
 			</Tooltip>
 		)
     return (
-      <div>
+      <div  style={{padding: "30px", textAlign: "center", marginTop: "10%" }} >
 				<FormGroup intent="primary">
 					<InputGroup
 						id="password"
@@ -83,6 +83,8 @@ class ForgetPasswordToken extends Component {
 					<Button
 						rightIcon="arrow-right"
 						intent={Intent.SUCCESS}
+						fill={true}
+						style={{ borderRadius: "50px" }}
 						large={true}
 						onClick={this.onFormSubmit}
 					>Reset </Button>

@@ -91,6 +91,7 @@ class Signup extends Component {
     }
     return (
       <div className="main">
+      <center>
         <div className="alt-main">
           <div className="alt-img">
             <center>
@@ -132,6 +133,7 @@ class Signup extends Component {
                 intent={Intent.SUCCESS}
                 large={true}
                 fill={true}
+                id="sign"
                 disabled={this.props.loading ? true : false}
                 onClick={this.onFormSubmit}
                 style={{ borderRadius: "50px" }}
@@ -145,6 +147,7 @@ class Signup extends Component {
             </FormGroup>
           </div>
         </div>
+        </center>
       </div>
     );
   }
