@@ -6,7 +6,9 @@ const UserSchema = new Schema({
 	name: String,
 	username: String,
 	email: String,
-	password: String
+	password: String,
+	job_status: Boolean,
+	job_preferences: [String]
 })
 
 /*

@@ -6,6 +6,7 @@ import { verify } from './authverify.middleware'
 
 export const connectMiddleware = app => {
   app.use(bodyParser.json())
+  app.use(bodyParser.urlencoded())
   app.use(compression())
   app.use(morgan('combined'))
   app.use(verify)

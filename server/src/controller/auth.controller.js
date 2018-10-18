@@ -133,7 +133,7 @@ const resetPassword = async (req, res) => {
 	if(username !== '') {
 		key = `${username}-password-token`
 	}
-	const user = await User.findOne({$or: [{ email: email }, { username: username }]})
+	const user = await UserModel.findOne({$or: [{ email: email }, { username: username }]})
 	if(!user) {
 		if(email === '' && username === '') {
 			return res.status(401).send(response(false, `Please pass email or username`))
@@ -157,4 +157,25 @@ const resetPassword = async (req, res) => {
 	await user.save()
 	redisClient.del(key)
 	return res.status(200).send(response(true, "Successfully updated password"))
+}
+
+export const updateProfile = async (req, res) => {
+	const data = req.body
+	const email = data.email ? data.email : ''
+	const username = data.username ? data.username : ''
+	const user = await UserModel.findOne({$or: [{ email: email }, { username: username }]})
+	if(!user) {
+		if(email === '' && username === '') {
+			return res.status(401).send(response(false, `Please pass email or username`))
+		}
+		if(email !== '') {
+			return res.status(401).send(response(false, `no user exist for this ${email}`))
+		}
+		if(username !== '') {
+			return res.status(401).send(response(false, `no user exist for this ${username}`))
+		}
+	}
+	const newData = Object.assign(user, data)
+	await newData.save()
+	return res.status(201).send(response(true, newData))
 }

@@ -17,12 +17,14 @@ connectMiddleware(app)
 	Routes defined here
 */
 import AuthRoute from './routes/auth.route'
+import AudioRoute from './routes/audio.route'
 import TestRoute from './routes/test.route'
 
 /*
 	Middleware for Routes connection defined here
 */
 router.use('/auth', AuthRoute)
+router.use('/audio', AudioRoute)
 router.use('/', TestRoute)
 
 app.use('/api', router)
