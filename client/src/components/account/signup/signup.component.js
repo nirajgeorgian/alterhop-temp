@@ -93,10 +93,8 @@ class Signup extends Component {
       <div className="main">
       <center>
         <div className="alt-main">
-          <div className="alt-img">
-            <center>
-              <img src="https://images.vexels.com/media/users/3/130623/isolated/preview/a9fd6374bd91118cfac101a1732eaec6-globe-on-hands-doodle-by-vexels.png" />
-            </center>
+          <div className="alt-imgs  ">
+            
           </div>
           <div className="alt-form">
             <div className="alt-text">JOIN US</div>
@@ -128,19 +126,15 @@ class Signup extends Component {
                 type={showPassword ? "text" : "password"}
                 onChange={this.onInputChange}
               />
-              <Button
-                rightIcon="arrow-right"
-                intent={Intent.SUCCESS}
-                large={true}
-                fill={true}
+              <button
+              className="signup-btn btn-signup"
                 id="sign"
                 disabled={this.props.loading ? true : false}
                 onClick={this.onFormSubmit}
-                style={{ borderRadius: "50px" }}
               >
                 SIGN UP{" "}
-              </Button>
-              <br />
+              </button>
+              <br /><br />
               <div className="foot">
                 Or have an account ! <Link to="/account/login">Log In</Link>
               </div>

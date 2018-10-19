@@ -7,6 +7,7 @@ import {
 } from '@blueprintjs/core'
 import { userAuthStartAction } from '../../../actionCreator/user.action.creator'
 import { resetUser } from '../../../actionCreator/user.action.creator'
+import 'hover.css/css/hover-min.css'
 import "./login.style.css";
 export const AppToaster = Toaster.create({
 	className: "recipe-toaster",
@@ -77,9 +78,7 @@ class Login extends Component {
 			<div className="main">
 				<div className="alt-main">
 					<div className="alt-img">
-						<center>
-							<img src='https://i1.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png?fit=256%2C256&quality=100&ssl=1' />
-						</center>
+						
 					</div>
 				
 					<div className="alt-form">
@@ -94,7 +93,7 @@ class Login extends Component {
 								id="username"
 								className="bp3-round"
 								large={true}
-								placeholder="Username ..."
+								placeholder="Username"
 								leftIcon="paperclip"
 								type="text"
 								value={this.state.username}
@@ -104,30 +103,24 @@ class Login extends Component {
 								id="password"
 								className="bp3-round"
 								large={true}
-								placeholder="Enter your password..."
+								placeholder="Password"
 								rightElement={lockButton}
 								leftIcon="key"
 								type={showPassword ? "text" : "password"}
 								value={this.state.password}
 								onChange={this.onInputChange}
 							/>
-							<Button
-								rightIcon="arrow-right"
-								fill={true}
-								intent={Intent.SUCCESS}
-								large={true}
-								style={{borderRadius : "50px"}}
+							<button
+								className="login-btn btn-login"
 								disabled={this.props.loading ? true : false}
 								onClick={this.onFormSubmit}
-							>Login </Button>
+							>Login </button>
 						</FormGroup>
 
 						 
 						<div className="foot">
 						Forgot <Link to='/account/forgot_password'>Username/Password</Link>
-						<br />
-						<span className="bp3-text-muted" style={{textAlign : "center"}}>---OR---</span>
-						<br />
+						<hr />
 						Create an account. Its Free <Link to='/account/signup'>Sign Up</Link>
 						</div>
 					</div>

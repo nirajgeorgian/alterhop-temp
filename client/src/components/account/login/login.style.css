@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Kosugi+Maru');
+@import url('https://fonts.googleapis.com/css?family=Passion+One');
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -33,60 +34,147 @@ body {
 	font-weight:300;
 	font-size: 16px;
   background-image: linear-gradient(to top, #88d3ce 0%, #6e45e2 100%);
+  
 }
 .alt-main {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  margin: 40px 10%;
+  margin: 120px 10%;
   position: absolute;
   width: 80%;
-  height: 80%;
+  height: 60%;
 	background: #fff;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	-o-border-radius: 5px;
 	-ms-border-radius: 5px;
 	border-radius: 5px;
-	padding: 40px;
-  background: #fff;
+	padding: 20px;
+  box-shadow : 10px 10px 10px 2px #333;
 }
-img {  
-  width: 55%;
-  height: 55%;
-  margin : 0 auto;
+.alt-img {
+  background-image: url("https://images.pexels.com/photos/257937/pexels-photo-257937.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  background-origin: border-box;
+  background-attachment: fixed;
+  background-position: left top;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border : 10px;
 }
 .bp3-round {
-  margin: 3% 0;
+  margin: 5% 0;
 }
 
 .alt-form {
-margin : auto 0;
+  margin : auto 0;
+  padding: 0 15px;
 }
- .alt-text {
-    font-family: "Kosugi Maru",sans-serif;
-    font-size: 1.45rem;
-    margin: 20px 0;
+.alt-text {
+  font-weight: bolder;
+  font-family: "Passion One", cursive;
+  font-size: 2.35rem;
+  margin: 5px 0;
+  text-align: center;
+}
+.login-btn {
+	height: 50px;
+	text-align: center;
+	margin-right: auto;
+	margin-left: auto;
+	width: 100%;
+  cursor: pointer;
+  border: none;
+  border-radius: 50px;
+  background: #2980B9;
+  background: -webkit-linear-gradient(30deg, #FFFFFF, #6DD5FA, #2980B9);
+  background: linear-gradient(30deg, #FFFFFF, #6DD5FA, #2980B9);
+
+
+}
+.btn-login {
+	color: rgba(255,255,255,1);
+	-webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+	-o-transition: all 0.5s;
+	transition: all 0.5s;
+	position: relative;
+}
+.btn-login a{
+	color: rgba(51,51,51,1);
+	text-decoration: none;
+	display: block;
+}
+.btn-login::before{
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+	background-color: rgba(255,255,255,0.25);
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	-o-transition: all 0.3s;
+	transition: all 0.3s;
+
+	border-radius: 50px;
+}
+.btn-login:hover::before{
+	opacity: 0 ;
+	-webkit-transform: scale(0.5,0.5);
+	transform: scale(0.5,0.5);
+}
+.btn-login::after{
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+	opacity: 0;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	-o-transition: all 0.3s;
+	transition: all 0.3s;
+	border: 1px solid rgba(255,255,255,0.5);
+	-webkit-transform: scale(1.2,1.2);
+	transform: scale(1.2,1.2);
+}
+.btn-login:hover::after{
+	opacity: 1;
+	-webkit-transform: scale(1,1);
+	transform: scale(1,1);
+}
+.foot{
     text-align: center;
-  }
-  .foot{
-     text-align: center;
-  }
+    font-family: "Lato",sans-serif;
+    padding: 0 15px 15px 15px;
+}
+hr {
+  width: 40%;
+  margin: 10px auto;
+}
 @media(max-width: 768px) {
   .alt-main{
     display: flex;
     flex-direction: column;
     height: 90%;
-    padding: 3em;
+    margin-top: 25px;
     margin-bottom: 15px;
   } 
   .alt-form {
-    margin-bottom : 10px;
+    margin-top : 80px;
+  }
+  .foot {
+    padding: 0 3px 3px 3px;
   }
   img {  
     width: 35%;
     height: 35%;
-    margin : 0 auto;
     position: relative;
+    margin: 0;
   }
 }
 
@@ -95,12 +183,10 @@ margin : auto 0;
     display: flex;
     flex-direction: column;
     padding: 10px;
-  
   }
 
   img {  
     width: 45%;
     height: 45%;
-    margin-top: 40px;
   }
 }
