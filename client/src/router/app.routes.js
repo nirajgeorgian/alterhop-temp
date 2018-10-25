@@ -50,6 +50,11 @@ const Editprofile = Loadable({
   loading: () => <PageLoader />,
 modules: ['user']
 })
+const userSearch = Loadable({
+  loader : () => import('../components/user/userSearch'),
+  loading: () => <PageLoader />,
+modules: ['user']
+})
 const User = Loadable({
   loader : () => import('../components/user/index'),
   loading: () => <PageLoader />,
@@ -68,6 +73,7 @@ class AppRouter extends Component {
         <Route exact path='/account/confirm_password/:token' component={PasswordResetComponent} />
         <Route exact path='/user' component={User} />
         <Route exact path='/user/edit-profile' component={Editprofile} />
+        <Route exact path='/user/search' component={userSearch} />
         <Route component={PageNotFound} />
       </Switch>
     )
